@@ -1,10 +1,9 @@
 {
-  "name": "Vokabeltrainer Englisch",
-  "short_name": "Vokabeln",
+  "name": "VocaFlow – Vokabeltrainer",
+  "short_name": "VocaFlow",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f5f7fb",
-  "theme_color": "#2864d7",
-  "lang": "de",
-  "description": "Deutsch-Englisch Vokabeltrainer mit Schreiben, Wiederholung und Merkhilfen"
+  "background_color": "#f6f8fc",
+  "theme_color": "#7138f4",
+  "lang": "de"
 }
