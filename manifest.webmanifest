@@ -1,0 +1,10 @@
+{
+  "name": "Vokabeltrainer Englisch",
+  "short_name": "Vokabeln",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#2864d7",
+  "lang": "de",
+  "description": "Deutsch-Englisch Vokabeltrainer mit Schreiben, Wiederholung und Merkhilfen"
+}
