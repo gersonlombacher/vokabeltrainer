@@ -76,57 +76,59 @@
   </main>
 
   
+  
   <main id="math-view" class="view hidden">
     <div class="page-head">
       <button class="back">←</button>
       <div><span class="eyebrow">Mathe</span><h2>1×1</h2></div>
     </div>
 
-    <section class="math-start card">
-      <span class="eyebrow">Schritt 1</span>
-      <h3>🎯 Was möchtest du üben?</h3>
-      <p>Wähle nur einen Bereich. Danach zeigt die App dir den nächsten Schritt.</p>
+    <section class="math-home-grid">
+      <button class="math-home-tile tile-blue" data-math-page="rows">
+        <span class="tile-emoji">🔢</span>
+        <h3>Reihen lernen</h3>
+        <p>2, 4, 6, 8 … oder 3, 6, 9, 12 …</p>
+      </button>
 
-      <div class="math-choice-grid">
-        <button class="math-choice" data-math-section="rows">
-          <span>🔢</span>
-          <b>Reihen lernen</b>
-          <small>2, 4, 6, 8 … / 3, 6, 9 …</small>
-        </button>
+      <button class="math-home-tile tile-purple" data-math-page="understand">
+        <span class="tile-emoji">🧠</span>
+        <h3>Verstehen & rechnen</h3>
+        <p>Mit Bildern und Rechentricks.</p>
+      </button>
 
-        <button class="math-choice" data-math-section="tasks">
-          <span>✏️</span>
-          <b>Aufgaben rechnen</b>
-          <small>z. B. 7 × 8</small>
-        </button>
+      <button class="math-home-tile tile-orange" data-math-page="memorize">
+        <span class="tile-emoji">🎮</span>
+        <h3>Auswendig lernen</h3>
+        <p>Blitzkarten, Glücksrad und Rhythmus.</p>
+      </button>
 
-        <button class="math-choice" data-math-section="memorize">
-          <span>🎮</span>
-          <b>Auswendig lernen</b>
-          <small>Karten, Glücksrad, Rhythmus</small>
-        </button>
-      </div>
+      <button class="math-home-tile tile-green" data-math-page="test">
+        <span class="tile-emoji">⚡</span>
+        <h3>Üben & testen</h3>
+        <p>Blitzrunde, Schwächen und Bosskampf.</p>
+      </button>
     </section>
+  </main>
 
-    <section id="math-section-rows" class="math-subsection card hidden">
-      <div class="subsection-head">
-        <button class="math-section-back" type="button">← Zur Auswahl</button>
-        <div><span class="eyebrow">Schritt 2</span><h3>Welche Reihe?</h3></div>
-      </div>
-
-      <div class="row-pick-grid" id="row-pick-grid">
+  
+  <main id="math-rows-menu-view" class="view hidden">
+    <div class="page-head">
+      <button class="back" data-back="math">←</button>
+      <div><span class="eyebrow">Reihen lernen</span><h2>Welche Reihe?</h2></div>
+    </div>
+    <section class="card choice-panel">
+      <div id="row-pick-grid" class="big-number-grid">
         <button data-seq="2">2er</button><button data-seq="3">3er</button><button data-seq="4">4er</button>
         <button data-seq="5">5er</button><button data-seq="6">6er</button><button data-seq="7">7er</button>
         <button data-seq="8">8er</button><button data-seq="9">9er</button><button data-seq="10">10er</button>
       </div>
 
-      <div id="rows-learning-options" class="hidden">
-        <span class="eyebrow">Schritt 3</span>
+      <div id="rows-learning-options" class="hidden choice-next">
         <h3 id="rows-selected-title">Wie möchtest du lernen?</h3>
-        <div class="simple-option-grid">
-          <button id="rows-listen" class="simple-option" type="button">🔊<b>Anhören</b><small>Die ganze Reihe hören</small></button>
-          <button id="rows-speak" class="simple-option" type="button">🎤<b>Aufsagen</b><small>Die App hört zu</small></button>
-          <button id="rows-gaps" class="simple-option" type="button">🧩<b>Lücken</b><small>Fehlende Zahl einsetzen</small></button>
+        <div class="math-home-grid compact">
+          <button id="rows-listen" class="math-home-tile tile-blue smalltile"><span class="tile-emoji">🔊</span><h3>Anhören</h3><p>Die Reihe wird vorgelesen.</p></button>
+          <button id="rows-speak" class="math-home-tile tile-purple smalltile"><span class="tile-emoji">🎤</span><h3>Aufsagen</h3><p>Die App hört zu und prüft.</p></button>
+          <button id="rows-gaps" class="math-home-tile tile-green smalltile"><span class="tile-emoji">🧩</span><h3>Lücken</h3><p>Fehlende Zahlen einsetzen.</p></button>
         </div>
       </div>
 
@@ -134,57 +136,68 @@
         <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
         <option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
       </select>
-      <button id="sequence-start" class="hidden" type="button">Reihe lernen</button>
-    </section>
-
-    <section id="math-section-tasks" class="math-subsection card hidden">
-      <div class="subsection-head">
-        <button class="math-section-back" type="button">← Zur Auswahl</button>
-        <div><span class="eyebrow">Schritt 2</span><h3>Wie möchtest du rechnen?</h3></div>
-      </div>
-
-      <div class="simple-option-grid">
-        <button class="simple-option" data-mode="learn">🧠<b>Mit Hilfe</b><small>Erklärung ist sichtbar</small></button>
-        <button class="simple-option" data-mode="smart">🎯<b>Schwierige Aufgaben</b><small>Fehler kommen öfter</small></button>
-        <button class="simple-option" data-mode="blitz">⚡<b>Blitzrunde</b><small>10 Aufgaben ohne Umwege</small></button>
-        <button class="simple-option" data-mode="boss">👑<b>Eine Reihe meistern</b><small>Nur eine Reihe prüfen</small></button>
-      </div>
-
-      <div class="tasks-helper">
-        <span class="eyebrow">Hilfe einstellen</span>
-        <div class="help-simple-grid">
-          <button class="help-mode selected" data-help-mode="full">🟢<b>Ich brauche Hilfe</b></button>
-          <button class="help-mode" data-help-mode="short">🟡<b>Ein bisschen Hilfe</b></button>
-          <button class="help-mode" data-help-mode="hidden">🔴<b>Ich kann es alleine</b></button>
-        </div>
-      </div>
-
-      <div class="tables-card">
-        <div class="section-head"><h3>Reihen auswählen</h3><button id="all-tables" class="link" type="button">Alle</button></div>
-        <div id="table-buttons" class="table-grid"></div>
-      </div>
-    </section>
-
-    <section id="math-section-memorize" class="math-subsection card hidden">
-      <div class="subsection-head">
-        <button class="math-section-back" type="button">← Zur Auswahl</button>
-        <div><span class="eyebrow">Schritt 2</span><h3>Wie möchtest du auswendig lernen?</h3></div>
-      </div>
-
-      <div class="simple-option-grid">
-        <button class="simple-option" data-memorize="flash">🃏<b>Blitzkarten</b><small>Aufgabe ansehen, Lösung aufdecken</small></button>
-        <button class="simple-option" data-memorize="wheel">🎡<b>Glücksrad</b><small>Rad drehen und Aufgabe merken</small></button>
-        <button class="simple-option" data-memorize="rhythm">🎵<b>Rhythmus</b><small>Aufgabe und Lösung hören</small></button>
-      </div>
-
-      <div class="tables-card">
-        <div class="section-head"><h3>Welche Reihen?</h3><button id="all-tables-memorize" class="link" type="button">Alle</button></div>
-        <div id="table-buttons-memorize" class="table-grid"></div>
-      </div>
+      <button id="sequence-start" class="hidden" type="button">Start</button>
     </section>
   </main>
 
-  <main id="math-play-view" class="view hidden">
+  <main id="math-understand-menu-view" class="view hidden">
+    <div class="page-head">
+      <button class="back" data-back="math">←</button>
+      <div><span class="eyebrow">Verstehen & rechnen</span><h2>Wie viel Hilfe?</h2></div>
+    </div>
+    <section class="math-home-grid">
+      <button class="math-home-tile tile-green help-mode selected" data-help-mode="full" data-mode="learn">
+        <span class="tile-emoji">🟢</span><h3>Ich brauche Hilfe</h3><p>Erklärung und Rechentrick sind sichtbar.</p>
+      </button>
+      <button class="math-home-tile tile-orange help-mode" data-help-mode="short" data-mode="learn">
+        <span class="tile-emoji">🟡</span><h3>Ein bisschen Hilfe</h3><p>Nur der Rechenweg wird gezeigt.</p>
+      </button>
+      <button class="math-home-tile tile-purple help-mode" data-help-mode="hidden" data-mode="learn">
+        <span class="tile-emoji">🔴</span><h3>Ich kann es alleine</h3><p>Hilfe nur, wenn ich sie brauche.</p>
+      </button>
+    </section>
+    <section class="card table-choice-card">
+      <h3>Welche Reihen?</h3>
+      <div id="table-buttons-understand" class="table-grid"></div>
+      <button id="all-tables-understand" class="btn secondary">Alle Reihen</button>
+    </section>
+  </main>
+
+  <main id="math-memorize-menu-view" class="view hidden">
+    <div class="page-head">
+      <button class="back" data-back="math">←</button>
+      <div><span class="eyebrow">Auswendig lernen</span><h2>Wähle ein Spiel</h2></div>
+    </div>
+    <section class="math-home-grid">
+      <button class="math-home-tile tile-blue" data-memorize="flash"><span class="tile-emoji">🃏</span><h3>Blitzkarten</h3><p>Aufgabe ansehen und Lösung aufdecken.</p></button>
+      <button class="math-home-tile tile-orange" data-memorize="wheel"><span class="tile-emoji">🎡</span><h3>Glücksrad</h3><p>Rad drehen und Aufgabe merken.</p></button>
+      <button class="math-home-tile tile-purple" data-memorize="rhythm"><span class="tile-emoji">🎵</span><h3>Rhythmus</h3><p>Aufgabe und Ergebnis hören.</p></button>
+    </section>
+    <section class="card table-choice-card">
+      <h3>Welche Reihen?</h3>
+      <div id="table-buttons-memorize" class="table-grid"></div>
+      <button id="all-tables-memorize" class="btn secondary">Alle Reihen</button>
+    </section>
+  </main>
+
+  <main id="math-test-menu-view" class="view hidden">
+    <div class="page-head">
+      <button class="back" data-back="math">←</button>
+      <div><span class="eyebrow">Üben & testen</span><h2>Wähle einen Modus</h2></div>
+    </div>
+    <section class="math-home-grid">
+      <button class="math-home-tile tile-blue" data-mode="smart"><span class="tile-emoji">🎯</span><h3>Schwächen</h3><p>Schwierige Aufgaben kommen häufiger.</p></button>
+      <button class="math-home-tile tile-orange" data-mode="blitz"><span class="tile-emoji">⚡</span><h3>Blitzrunde</h3><p>10 schnelle Aufgaben.</p></button>
+      <button class="math-home-tile tile-purple" data-mode="boss"><span class="tile-emoji">👑</span><h3>Bosskampf</h3><p>Eine Reihe meistern.</p></button>
+    </section>
+    <section class="card table-choice-card">
+      <h3>Welche Reihen?</h3>
+      <div id="table-buttons-test" class="table-grid"></div>
+      <button id="all-tables-test" class="btn secondary">Alle Reihen</button>
+    </section>
+  </main>
+
+<main id="math-play-view" class="view hidden">
     <div class="page-head"><button class="back" data-back="math">←</button><div><span class="eyebrow">1×1</span><h2 id="math-title">Training</h2></div></div>
     <div class="learn-grid">
       <section class="learn-card card">

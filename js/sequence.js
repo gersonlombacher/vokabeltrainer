@@ -55,7 +55,8 @@ function parseGermanNumbers(text){
   const ones={null:0,eins:1,ein:1,eine:1,zwei:2,drei:3,vier:4,"fünf":5,funf:5,sechs:6,sieben:7,acht:8,neun:9};
   const teens={zehn:10,elf:11,"zwölf":12,zwoelf:12,dreizehn:13,vierzehn:14,"fünfzehn":15,funfzehn:15,sechzehn:16,siebzehn:17,achtzehn:18,neunzehn:19};
   const tens={zwanzig:20,"dreißig":30,dreissig:30,vierzig:40,"fünfzig":50,funfzig:50,sechzig:60,siebzig:70,achtzig:80,neunzig:90};
-  const words=String(text||"").toLowerCase().replace(/[.,;:!?]/g," ").split(/\s+/).filter(Boolean);
+  const normalizedText=String(text||"").toLowerCase().replace(/\bsex\b/g,"sechs").replace(/\bsix\b/g,"sechs");
+  const words=normalizedText.replace(/[.,;:!?]/g," ").split(/\s+/).filter(Boolean);
   const out=[];
   for(const w of words){
     if(/^\d+$/.test(w)){ out.push(Number(w)); continue; }
@@ -117,7 +118,8 @@ function startSpeechRecognition(){
       const t=e.results[i][0].transcript;
       if(e.results[i].isFinal)finalText+=" "+t; else interim+=t;
     }
-    document.querySelector("#speech-live").textContent=(finalText+" "+interim).trim()||"Ich höre zu …";
+    const liveNums=parseGermanNumbers((finalText+" "+interim).trim());
+    document.querySelector("#speech-live").textContent=liveNums.length ? liveNums.join(" · ") : "Ich höre zu …";
   };
   sequenceRecognition.onerror=e=>{
     document.querySelector("#speech-status-text").textContent="Die Spracherkennung konnte nicht zuverlässig zuhören.";

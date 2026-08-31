@@ -99,3 +99,26 @@
   .row-pick-grid{grid-template-columns:repeat(3,1fr)}
   .help-simple-grid{grid-template-columns:1fr}
 }
+
+.math-home-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.math-home-grid.compact{grid-template-columns:repeat(3,1fr)}
+.math-home-tile{min-height:215px;border:1px solid var(--border);border-radius:24px;padding:22px;text-align:left;box-shadow:var(--shadow);background:#fff}
+.math-home-tile .tile-emoji{font-size:46px;display:block}.math-home-tile h3{font-size:24px;margin:14px 0 7px}.math-home-tile p{color:var(--muted);font-size:15px;line-height:1.45;margin:0}
+.tile-blue{background:linear-gradient(145deg,#fff,#eaf4ff)}.tile-purple{background:linear-gradient(145deg,#fff,#f0e9ff)}
+.tile-orange{background:linear-gradient(145deg,#fff,#fff0e5)}.tile-green{background:linear-gradient(145deg,#fff,#eafaf2)}
+.smalltile{min-height:160px}.choice-panel,.table-choice-card{padding:20px}.choice-next{margin-top:22px;padding-top:18px;border-top:1px solid var(--border)}
+.big-number-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.big-number-grid button{min-height:70px;border:1px solid #cdbdf5;background:#f0eaff;color:#5e3bc2;border-radius:17px;font-size:22px;font-weight:900}
+.big-number-grid button.selected{background:var(--purple);color:white}
+.table-choice-card{margin-top:16px}.table-choice-card h3{margin-top:0}
+#sequence-view .sequence-learn{max-width:980px;margin:0 auto}
+#sequence-view .sequence-steps{grid-template-columns:repeat(5,1fr);gap:10px}
+#sequence-view .sequence-step{font-size:22px;padding:14px 8px}
+#sequence-view .sequence-numberline{display:grid;grid-template-columns:repeat(5,1fr);overflow:visible}
+#sequence-view .sequence-hop{min-width:0}
+@media(max-width:760px){
+  .math-home-grid,.math-home-grid.compact{grid-template-columns:1fr}
+  .math-home-tile{min-height:145px;padding:16px}.math-home-tile .tile-emoji{font-size:36px}.math-home-tile h3{font-size:20px}
+  .big-number-grid{grid-template-columns:repeat(3,1fr)}
+  #sequence-view .sequence-steps,#sequence-view .sequence-numberline{grid-template-columns:repeat(2,1fr)}
+}

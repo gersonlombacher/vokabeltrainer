@@ -1,35 +1,20 @@
-# VocaFlow V11.6 – vereinfachter Mathebereich
+# VocaFlow V11.7 – Mathe deutlich übersichtlicher
 
-Die Mathe-Startseite wurde komplett vereinfacht.
+Korrekturen:
+- Mathe-Hauptseite jetzt wie die VocaFlow-Startseite mit vier großen Kacheln:
+  - Reihen lernen
+  - Verstehen & rechnen
+  - Auswendig lernen
+  - Üben & testen
+- Unterfunktionen erscheinen erst nach Auswahl einer Kachel.
+- Keine überladene Sammelseite mehr.
+- Reihen lernen hat einen klaren Ablauf:
+  Reihe wählen → Anhören / Aufsagen / Lücken.
+- Spracherkennung zeigt nicht mehr den rohen Erkennungstext.
+  Erkannte Sprache wird sofort in Zahlen umgewandelt.
+- Häufige Fehlinterpretation „sex“/„six“ wird intern als „sechs“ behandelt.
+- Die 2er-Reihe darf nicht mehr dauerhaft auf der Startseite erscheinen.
+- Reihenansicht wurde visuell aufgeräumt und als Raster gestaltet.
 
-Neue Bedienung:
-1. Was möchtest du üben?
-   - Reihen lernen
-   - Aufgaben rechnen
-   - Auswendig lernen
-2. Erst danach erscheint die passende Auswahl.
-3. Keine drei verschiedenen Systeme mehr gleichzeitig auf einer Seite.
-
-Reihen lernen:
-- Reihe auswählen
-- Anhören
-- Aufsagen mit Spracherkennung (wenn verfügbar)
-- Lücken üben
-
-Aufgaben rechnen:
-- Mit Hilfe
-- Schwierige Aufgaben
-- Blitzrunde
-- Eine Reihe meistern
-- Hilfe heißt jetzt kindgerechter:
-  - Ich brauche Hilfe
-  - Ein bisschen Hilfe
-  - Ich kann es alleine
-
-Auswendig lernen:
-- Blitzkarten
-- Glücksrad
-- Rhythmus
-- Reihen separat auswählbar
-
-Bestehende Lernlogik, Profile, Englisch, XP und Belohnungen bleiben erhalten.
+Hinweis:
+Browser-Spracherkennung bleibt geräteabhängig. Die App zeigt deshalb nur die interpretierten Zahlen und nicht den möglicherweise unpassenden Rohtext des Browsers.

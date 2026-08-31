@@ -1,41 +1,23 @@
 
-function closeMathSections(){
-  ["rows","tasks","memorize"].forEach(x=>document.querySelector(`#math-section-${x}`)?.classList.add("hidden"));
-  document.querySelector(".math-start")?.classList.remove("hidden");
+function showMathMenu(name){
+  const map={
+    rows:"math-rows-menu",
+    understand:"math-understand-menu",
+    memorize:"math-memorize-menu",
+    test:"math-test-menu"
+  };
+  showView(map[name]||"math");
+  if(name==="understand") renderExtraTables("#table-buttons-understand");
+  if(name==="memorize") renderExtraTables("#table-buttons-memorize");
+  if(name==="test") renderExtraTables("#table-buttons-test");
 }
-function openMathSection(name){
-  document.querySelector(".math-start")?.classList.add("hidden");
-  ["rows","tasks","memorize"].forEach(x=>document.querySelector(`#math-section-${x}`)?.classList.toggle("hidden",x!==name));
-  if(name==="memorize") renderMemorizeTableButtons();
-}
-document.querySelectorAll("[data-math-section]").forEach(b=>b.addEventListener("click",()=>openMathSection(b.dataset.mathSection)));
-document.querySelectorAll(".math-section-back").forEach(b=>b.addEventListener("click",closeMathSections));
 
-document.querySelectorAll("[data-seq]").forEach(b=>b.addEventListener("click",()=>{
-  const n=Number(b.dataset.seq);
-  document.querySelectorAll("[data-seq]").forEach(x=>x.classList.toggle("selected",x===b));
-  const sel=document.querySelector("#sequence-select");
-  if(sel)sel.value=String(n);
-  const title=document.querySelector("#rows-selected-title");
-  if(title)title.textContent=`${n}er-Reihe – wie möchtest du lernen?`;
-  document.querySelector("#rows-learning-options")?.classList.remove("hidden");
-}));
+document.querySelectorAll("[data-math-page]").forEach(b=>{
+  b.addEventListener("click",()=>showMathMenu(b.dataset.mathPage));
+});
 
-function beginSelectedSequence(action){
-  const hiddenStart=document.querySelector("#sequence-start");
-  hiddenStart?.click();
-  setTimeout(()=>{
-    if(action==="listen") document.querySelector("#sequence-play")?.click();
-    if(action==="speak") document.querySelector("#sequence-speak")?.click();
-    if(action==="gaps") document.querySelector("#sequence-practice")?.click();
-  },80);
-}
-document.querySelector("#rows-listen")?.addEventListener("click",()=>beginSelectedSequence("listen"));
-document.querySelector("#rows-speak")?.addEventListener("click",()=>beginSelectedSequence("speak"));
-document.querySelector("#rows-gaps")?.addEventListener("click",()=>beginSelectedSequence("gaps"));
-
-function renderMemorizeTableButtons(){
-  const box=document.querySelector("#table-buttons-memorize"); if(!box)return;
+function renderExtraTables(selector){
+  const box=document.querySelector(selector); if(!box)return;
   box.innerHTML="";
   for(let n=2;n<=10;n++){
     const b=document.createElement("button");
@@ -44,12 +26,46 @@ function renderMemorizeTableButtons(){
     b.addEventListener("click",()=>{
       selected.has(n)?selected.delete(n):selected.add(n);
       renderTables();
-      renderMemorizeTableButtons();
+      renderExtraTables(selector);
     });
     box.appendChild(b);
   }
 }
-document.querySelector("#all-tables-memorize")?.addEventListener("click",()=>{
-  selected=new Set([2,3,4,5,6,7,8,9,10]);
-  renderTables();renderMemorizeTableButtons();
+
+["understand","memorize","test"].forEach(kind=>{
+  document.querySelector(`#all-tables-${kind}`)?.addEventListener("click",()=>{
+    selected=new Set([2,3,4,5,6,7,8,9,10]);
+    renderTables();
+    renderExtraTables(`#table-buttons-${kind}`);
+  });
+});
+
+document.querySelectorAll("[data-seq]").forEach(b=>{
+  b.addEventListener("click",()=>{
+    const n=Number(b.dataset.seq);
+    document.querySelectorAll("[data-seq]").forEach(x=>x.classList.toggle("selected",x===b));
+    document.querySelector("#sequence-select").value=String(n);
+    document.querySelector("#rows-selected-title").textContent=`${n}er-Reihe – wie möchtest du lernen?`;
+    document.querySelector("#rows-learning-options").classList.remove("hidden");
+  });
+});
+
+function startSelectedSequence(action){
+  document.querySelector("#sequence-start").click();
+  setTimeout(()=>{
+    if(action==="listen")document.querySelector("#sequence-play")?.click();
+    if(action==="speak")document.querySelector("#sequence-speak")?.click();
+    if(action==="gaps")document.querySelector("#sequence-practice")?.click();
+  },120);
+}
+document.querySelector("#rows-listen")?.addEventListener("click",()=>startSelectedSequence("listen"));
+document.querySelector("#rows-speak")?.addEventListener("click",()=>startSelectedSequence("speak"));
+document.querySelector("#rows-gaps")?.addEventListener("click",()=>startSelectedSequence("gaps"));
+
+document.querySelectorAll("#math-understand-menu-view .help-mode").forEach(b=>{
+  b.addEventListener("click",()=>{
+    helpMode=b.dataset.helpMode;
+    localStorage.setItem("vocaflow_math_help_mode",helpMode);
+    document.querySelectorAll(".help-mode").forEach(x=>x.classList.toggle("selected",x.dataset.helpMode===helpMode));
+  });
 });
