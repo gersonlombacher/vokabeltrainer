@@ -1,20 +1,16 @@
-# VocaFlow V12.7 – Bosskampf & Lücken als Kacheln
+# VocaFlow V12.8 – Lücken durch Anklicken
 
-Behoben:
-- Bosskampf: „Antwort prüfen“ funktioniert wieder.
-- Enter-Taste prüft ebenfalls die Antwort.
-- Bei falscher Antwort bleibt die Aufgabe stehen.
-- „Weiß ich nicht“ zeigt die Lösung und geht anschließend weiter.
+Reihen lernen → Lücken wurde komplett geändert:
 
-Neu bei Reihen lernen → Lücken:
-- keine Texteingabe mehr
-- keine Kommatrennung mehr
-- Reihe 7 Sekunden ansehen
-- danach verschwinden die oberen Übersichten
-- eine Lücke wird angezeigt
-- darunter erscheinen vier große Zahlen-Kacheln
-- Kind tippt nur auf die richtige Zahl
-- richtige Kachel wird grün, falsche kurz rot
-- nach fünf richtigen Lücken gibt es eine Erfolgsmeldung
+1. Die komplette Reihe wird 7 Sekunden gezeigt.
+2. Danach verschwinden die oberen Übersichten.
+3. In der Reihe fehlen jetzt vier Zahlen.
+4. Darunter erscheinen genau diese vier Zahlen als gemischte Kacheln.
+5. Das Kind tippt die Zahlen von links nach rechts in der richtigen Reihenfolge an.
+6. Richtige Auswahl wird grün und in die Lücke eingesetzt.
+7. Falsche Auswahl wird kurz rot.
+8. Mit „Neu versuchen“ kann die aktuelle Runde zurückgesetzt werden.
 
-Version: V12.7 / ?v=127
+Es gibt keine Texteingabe, keine Kommas und keinen Prüfen-Button mehr.
+
+Version: V12.8 / ?v=128

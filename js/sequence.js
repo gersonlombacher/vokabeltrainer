@@ -4,17 +4,20 @@ let sequenceRecognition=null;
 let selectedVoice=null;
 let previewTimeout=null;
 let countdownInterval=null;
-let practiceRound=0;
-let practiceGapIndex=0;
-let practiceValues=[];
+
+let gapValues=[];
+let gapIndexes=[];
+let gapMissingValues=[];
+let gapUserValues=[];
+let gapRound=0;
 
 function seqVals(n){ return Array.from({length:10},(_,i)=>n*(i+1)); }
 
 function pickNaturalGermanVoice(){
-  if(!("speechSynthesis" in window))return null;
+  if(!("speechSynthesis" in window)) return null;
   const voices=speechSynthesis.getVoices()||[];
   const preferred=/Anna|Helena|Petra|Marlene|Vicki|Katja|Sandy|Amelie|female|natural|premium|enhanced/i;
-  return voices.find(v=>/^de(-|_)/i.test(v.lang||"")&&preferred.test(v.name||""))
+  return voices.find(v=>/^de(-|_)/i.test(v.lang||"") && preferred.test(v.name||""))
       || voices.find(v=>/^de(-|_)/i.test(v.lang||""))
       || null;
 }
@@ -25,8 +28,8 @@ if("speechSynthesis" in window){
 }
 
 function clearPreview(){
-  if(previewTimeout)clearTimeout(previewTimeout);
-  if(countdownInterval)clearInterval(countdownInterval);
+  if(previewTimeout) clearTimeout(previewTimeout);
+  if(countdownInterval) clearInterval(countdownInterval);
   previewTimeout=null;
   countdownInterval=null;
 }
@@ -43,19 +46,19 @@ function hideReferences(){
 function previewThenHide(seconds=7,after=null){
   clearPreview();
   showReferences();
-  let remaining=seconds;
   const note=document.querySelector("#sequence-preview-note");
-  if(note)note.textContent=`👀 Noch ${remaining} Sekunden anschauen …`;
+  let remaining=seconds;
+  if(note) note.textContent=`👀 Noch ${remaining} Sekunden anschauen …`;
 
   countdownInterval=setInterval(()=>{
     remaining--;
-    if(remaining>0 && note)note.textContent=`👀 Noch ${remaining} Sekunden anschauen …`;
+    if(remaining>0 && note) note.textContent=`👀 Noch ${remaining} Sekunden anschauen …`;
   },1000);
 
   previewTimeout=setTimeout(()=>{
     clearPreview();
     hideReferences();
-    if(after)after();
+    if(after) after();
   },seconds*1000);
 }
 
@@ -81,6 +84,7 @@ function renderSequence(){
     d.innerHTML=`<small>${i+1}×${sequenceN}</small><br>${v}`;
     steps.appendChild(d);
   });
+
   vals.forEach(v=>{
     const d=document.createElement("div");
     d.className="sequence-hop";
@@ -88,12 +92,12 @@ function renderSequence(){
     line.appendChild(d);
   });
 
-  document.querySelector("#sequence-speech-box").classList.add("hidden");
-  document.querySelector("#sequence-practice-box").classList.add("hidden");
+  document.querySelector("#sequence-speech-box")?.classList.add("hidden");
+  document.querySelector("#sequence-practice-box")?.classList.add("hidden");
   document.querySelector("#sequence-feedback").textContent="";
   showReferences();
   const note=document.querySelector("#sequence-preview-note");
-  if(note)note.textContent="👀 Schau dir die Reihe an.";
+  if(note) note.textContent="👀 Schau dir die Reihe an.";
 }
 
 function speakOne(text,onend){
@@ -102,7 +106,7 @@ function speakOne(text,onend){
   u.lang="de-DE";
   u.rate=.78;
   u.pitch=1.0;
-  if(selectedVoice)u.voice=selectedVoice;
+  if(selectedVoice) u.voice=selectedVoice;
   u.onend=()=>onend?.();
   speechSynthesis.speak(u);
 }
@@ -138,33 +142,12 @@ function parseGermanNumbers(text){
     achtzehn:18,neunzehn:19,zwanzig:20,"dreißig":30,dreissig:30,vierzig:40,"fünfzig":50,funfzig:50,sechzig:60,
     siebzig:70,achtzig:80,neunzig:90
   };
-  const ones={eins:1,ein:1,zwei:2,drei:3,vier:4,"fünf":5,funf:5,sechs:6,sieben:7,acht:8,neun:9};
-  const tens={zwanzig:20,"dreißig":30,dreissig:30,vierzig:40,"fünfzig":50,funfzig:50,sechzig:60,siebzig:70,achtzig:80,neunzig:90};
   const out=[];
   for(const w of normalized.split(/\s+/).filter(Boolean)){
-    if(/^\d+$/.test(w)){out.push(Number(w));continue;}
-    if(simple[w]!==undefined){out.push(simple[w]);continue;}
-    let found=null;
-    for(const [ow,ov] of Object.entries(ones)){
-      for(const [tw,tv] of Object.entries(tens)){
-        if(w===ow+"und"+tw){found=ov+tv;break;}
-      }
-      if(found!==null)break;
-    }
-    if(found!==null)out.push(found);
+    if(/^\d+$/.test(w)) out.push(Number(w));
+    else if(simple[w]!==undefined) out.push(simple[w]);
   }
   return out;
-}
-function compareSequence(nums){
-  const exp=seqVals(sequenceN);
-  let wrong=-1;
-  for(let i=0;i<exp.length;i++){
-    if(nums[i]!==exp[i]){wrong=i;break;}
-  }
-  document.querySelector("#sequence-feedback").textContent=
-    wrong===-1 && nums.length>=exp.length
-      ? `🎉 Super! Die ${sequenceN}er-Reihe war vollständig richtig.`
-      : "Fast. Versuch die Reihe noch einmal.";
 }
 function beginRecognition(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -178,6 +161,7 @@ function beginRecognition(){
   sequenceRecognition.continuous=false;
   sequenceRecognition.interimResults=true;
   let finalText="";
+
   sequenceRecognition.onstart=()=>{
     document.querySelector("#speech-status-text").textContent=`Jetzt die ${sequenceN}er-Reihe ohne Ablesen aufsagen.`;
     document.querySelector("#speech-live").textContent="Ich höre zu …";
@@ -186,7 +170,7 @@ function beginRecognition(){
     let interim="";
     for(let i=e.resultIndex;i<e.results.length;i++){
       const t=e.results[i][0].transcript;
-      if(e.results[i].isFinal)finalText+=" "+t;
+      if(e.results[i].isFinal) finalText+=" "+t;
       else interim+=t;
     }
     const nums=parseGermanNumbers((finalText+" "+interim).trim());
@@ -194,7 +178,10 @@ function beginRecognition(){
   };
   sequenceRecognition.onend=()=>{
     const nums=parseGermanNumbers(finalText);
-    if(nums.length)compareSequence(nums);
+    const exp=seqVals(sequenceN);
+    const ok=nums.length>=10 && exp.every((v,i)=>nums[i]===v);
+    document.querySelector("#sequence-feedback").textContent=
+      ok ? "🎉 Super! Die Reihe war richtig." : "Fast. Versuch die Reihe noch einmal.";
   };
   try{sequenceRecognition.start()}catch{}
 }
@@ -208,83 +195,118 @@ function stopSpeech(){
   sequenceRecognition=null;
 }
 
-/* LÜCKEN MIT KLICK-KACHELN */
+/* ---------- LÜCKEN: KACHELN IN RICHTIGER REIHENFOLGE ---------- */
 function shuffled(arr){
   return arr.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v);
 }
-function buildChoices(correct){
-  const vals=seqVals(sequenceN);
-  const idx=vals.indexOf(correct);
-  const candidates=new Set([correct]);
 
-  // plausible Nachbarwerte derselben Reihe
-  for(const offset of [-2,-1,1,2,3,-3]){
-    const j=idx+offset;
-    if(j>=0 && j<vals.length)candidates.add(vals[j]);
-    if(candidates.size>=4)break;
-  }
-  return shuffled([...candidates].slice(0,4));
+function createGapIndexes(){
+  // 4 echte Lücken; nicht ganz am Anfang oder Ende.
+  const candidates=[1,2,3,4,5,6,7,8];
+  return shuffled(candidates).slice(0,4).sort((a,b)=>a-b);
 }
-function renderPracticeRound(){
-  const vals=practiceValues;
-  const correct=vals[practiceGapIndex];
 
-  // einige Anker anzeigen, aber niemals die komplette Reihe
-  const display=vals.map((v,i)=>{
-    if(i===practiceGapIndex)return `<span class="gap-slot active-gap">?</span>`;
-    if(i===0 || i===3 || i===6 || i===9)return `<span>${v}</span>`;
-    return `<span class="gap-dot">•</span>`;
+function buildGapRound(){
+  gapValues=seqVals(sequenceN);
+  gapIndexes=createGapIndexes();
+  gapMissingValues=gapIndexes.map(i=>gapValues[i]);
+  gapUserValues=[];
+
+  const line=document.querySelector("#practice-line");
+  line.innerHTML=gapValues.map((v,i)=>{
+    if(gapIndexes.includes(i)){
+      const order=gapIndexes.indexOf(i);
+      return `<span class="gap-slot" data-gap-order="${order}">?</span>`;
+    }
+    return `<span class="gap-known">${v}</span>`;
+  }).join('<span class="sequence-sep"> · </span>');
+
+  renderSelectedGaps();
+  renderGapChoices();
+  document.querySelector("#sequence-feedback").textContent="Tippe die fehlenden Zahlen von links nach rechts an.";
+}
+
+function renderSelectedGaps(){
+  const box=document.querySelector("#practice-selected");
+  if(!box)return;
+  box.innerHTML="";
+  gapMissingValues.forEach((_,i)=>{
+    const chip=document.createElement("div");
+    chip.className="selected-gap-chip";
+    chip.textContent=gapUserValues[i] ?? (i+1);
+    if(gapUserValues[i]!==undefined) chip.classList.add("filled");
+    box.appendChild(chip);
   });
-  document.querySelector("#practice-line").innerHTML=display.join('<span class="sequence-sep"> · </span>');
 
-  const choices=document.querySelector("#practice-choices");
-  choices.innerHTML="";
-  buildChoices(correct).forEach(value=>{
-    const b=document.createElement("button");
-    b.type="button";
-    b.className="practice-choice";
-    b.textContent=value;
-    b.addEventListener("click",()=>{
-      if(value===correct){
-        b.classList.add("correct");
-        document.querySelector("#sequence-feedback").textContent="✅ Richtig!";
-        practiceRound++;
-        setTimeout(()=>{
-          if(practiceRound>=5){
-            document.querySelector("#sequence-feedback").textContent="🎉 Super! Fünf Lücken geschafft.";
-            practiceRound=0;
-          }
-          nextPracticeGap();
-        },550);
+  document.querySelectorAll("[data-gap-order]").forEach(el=>{
+    const order=Number(el.dataset.gapOrder);
+    el.textContent=gapUserValues[order] ?? "?";
+    el.classList.toggle("filled",gapUserValues[order]!==undefined);
+  });
+}
+
+function renderGapChoices(){
+  const box=document.querySelector("#practice-choices");
+  box.innerHTML="";
+  shuffled(gapMissingValues).forEach(value=>{
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="practice-choice";
+    btn.textContent=value;
+
+    btn.addEventListener("click",()=>{
+      if(btn.disabled) return;
+
+      const expectedIndex=gapUserValues.length;
+      const expected=gapMissingValues[expectedIndex];
+
+      if(value===expected){
+        gapUserValues.push(value);
+        btn.disabled=true;
+        btn.classList.add("used","correct");
+        renderSelectedGaps();
+
+        if(gapUserValues.length===gapMissingValues.length){
+          document.querySelector("#sequence-feedback").textContent="🎉 Super! Alle Lücken richtig.";
+          gapRound++;
+          setTimeout(()=>{
+            buildGapRound();
+          },900);
+        }else{
+          document.querySelector("#sequence-feedback").textContent="✅ Richtig. Jetzt die nächste Lücke.";
+        }
       }else{
-        b.classList.add("wrong");
-        document.querySelector("#sequence-feedback").textContent="Noch nicht. Nimm eine andere Kachel.";
-        setTimeout(()=>b.classList.remove("wrong"),500);
+        btn.classList.add("wrong");
+        document.querySelector("#sequence-feedback").textContent="Noch nicht – welche Zahl gehört als Nächstes?";
+        setTimeout(()=>btn.classList.remove("wrong"),500);
       }
     });
-    choices.appendChild(b);
+
+    box.appendChild(btn);
   });
 }
-function nextPracticeGap(){
-  practiceValues=seqVals(sequenceN);
-  const choices=[1,2,4,5,7,8];
-  practiceGapIndex=choices[Math.floor(Math.random()*choices.length)];
-  renderPracticeRound();
+
+function resetGapRound(){
+  gapUserValues=[];
+  renderSelectedGaps();
+  renderGapChoices();
+  document.querySelector("#sequence-feedback").textContent="Nochmal von links nach rechts.";
 }
+
 function openPractice(){
   stopSpeech();
-  practiceRound=0;
+  gapRound=0;
   document.querySelector("#sequence-practice-box").classList.remove("hidden");
+
+  const vals=seqVals(sequenceN);
+  document.querySelector("#practice-line").innerHTML=
+    vals.map(v=>`<span class="gap-known">${v}</span>`).join('<span class="sequence-sep"> · </span>');
+  document.querySelector("#practice-selected").innerHTML="";
+  document.querySelector("#practice-choices").innerHTML="";
   document.querySelector("#sequence-feedback").textContent="Schau dir die Reihe 7 Sekunden an.";
 
-  // zunächst einmal vollständig zeigen
-  const vals=seqVals(sequenceN);
-  document.querySelector("#practice-line").textContent=vals.join(" · ");
-  document.querySelector("#practice-choices").innerHTML="";
-
   previewThenHide(7,()=>{
-    document.querySelector("#sequence-feedback").textContent="Jetzt ohne Abschreiben: Tippe auf die richtige Kachel.";
-    nextPracticeGap();
+    buildGapRound();
   });
 }
 
@@ -294,3 +316,4 @@ document.querySelector("#sequence-practice").addEventListener("click",openPracti
 document.querySelector("#sequence-speak").addEventListener("click",startSpeechRecognition);
 document.querySelector("#speech-stop").addEventListener("click",stopSpeech);
 document.querySelector("#speech-retry").addEventListener("click",startSpeechRecognition);
+document.querySelector("#practice-reset")?.addEventListener("click",resetGapRound);
