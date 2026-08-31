@@ -1,20 +1,9 @@
-# VocaFlow V11.7 – Mathe deutlich übersichtlicher
+# VocaFlow V11.8 – große Mathe-Kacheln
 
-Korrekturen:
-- Mathe-Hauptseite jetzt wie die VocaFlow-Startseite mit vier großen Kacheln:
-  - Reihen lernen
-  - Verstehen & rechnen
-  - Auswendig lernen
-  - Üben & testen
-- Unterfunktionen erscheinen erst nach Auswahl einer Kachel.
-- Keine überladene Sammelseite mehr.
-- Reihen lernen hat einen klaren Ablauf:
-  Reihe wählen → Anhören / Aufsagen / Lücken.
-- Spracherkennung zeigt nicht mehr den rohen Erkennungstext.
-  Erkannte Sprache wird sofort in Zahlen umgewandelt.
-- Häufige Fehlinterpretation „sex“/„six“ wird intern als „sechs“ behandelt.
-- Die 2er-Reihe darf nicht mehr dauerhaft auf der Startseite erscheinen.
-- Reihenansicht wurde visuell aufgeräumt und als Raster gestaltet.
-
-Hinweis:
-Browser-Spracherkennung bleibt geräteabhängig. Die App zeigt deshalb nur die interpretierten Zahlen und nicht den möglicherweise unpassenden Rohtext des Browsers.
+Änderung:
+- Die vier Mathe-Hauptkacheln sind jetzt deutlich größer.
+- Optik und Proportionen orientieren sich stärker an den großen Kacheln der VocaFlow-Startseite.
+- Größere Icons, Überschriften und Beschreibungstexte.
+- Auf großen Bildschirmen vier breite Kacheln nebeneinander.
+- Auf iPad/kleineren Displays zwei Spalten.
+- Auf iPhone eine große Kachel pro Zeile.

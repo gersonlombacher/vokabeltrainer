@@ -122,3 +122,74 @@
   .big-number-grid{grid-template-columns:repeat(3,1fr)}
   #sequence-view .sequence-steps,#sequence-view .sequence-numberline{grid-template-columns:repeat(2,1fr)}
 }
+
+/* V11.8: Mathe-Kacheln groß und klar wie auf der Startseite */
+#math-view .math-home-grid{
+  grid-template-columns:repeat(4, minmax(0,1fr));
+  gap:18px;
+}
+#math-view .math-home-tile{
+  min-height:250px;
+  padding:26px 24px;
+  border-radius:26px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:flex-start;
+}
+#math-view .math-home-tile .tile-emoji{
+  font-size:56px;
+  line-height:1;
+  margin-bottom:18px;
+}
+#math-view .math-home-tile h3{
+  font-size:29px;
+  line-height:1.12;
+  margin:0 0 12px;
+}
+#math-view .math-home-tile p{
+  font-size:18px;
+  line-height:1.45;
+  max-width:95%;
+}
+#math-view .page-head{
+  margin-bottom:22px;
+}
+
+/* Unterseiten ebenfalls großzügiger */
+#math-rows-menu-view .math-home-grid,
+#math-understand-menu-view .math-home-grid,
+#math-memorize-menu-view .math-home-grid,
+#math-test-menu-view .math-home-grid{
+  gap:16px;
+}
+#math-rows-menu-view .math-home-tile,
+#math-understand-menu-view .math-home-tile,
+#math-memorize-menu-view .math-home-tile,
+#math-test-menu-view .math-home-tile{
+  min-height:190px;
+  padding:22px;
+}
+#math-rows-menu-view .math-home-tile .tile-emoji,
+#math-understand-menu-view .math-home-tile .tile-emoji,
+#math-memorize-menu-view .math-home-tile .tile-emoji,
+#math-test-menu-view .math-home-tile .tile-emoji{
+  font-size:46px;
+}
+#math-rows-menu-view .math-home-tile h3,
+#math-understand-menu-view .math-home-tile h3,
+#math-memorize-menu-view .math-home-tile h3,
+#math-test-menu-view .math-home-tile h3{
+  font-size:23px;
+}
+
+@media(max-width:1100px){
+  #math-view .math-home-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  #math-view .math-home-grid{grid-template-columns:1fr}
+  #math-view .math-home-tile{min-height:180px;padding:20px}
+  #math-view .math-home-tile .tile-emoji{font-size:44px;margin-bottom:12px}
+  #math-view .math-home-tile h3{font-size:24px}
+  #math-view .math-home-tile p{font-size:16px}
+}
