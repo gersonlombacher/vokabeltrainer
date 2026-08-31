@@ -1,9 +1,9 @@
 {
-  "name": "VocaFlow – Vokabeltrainer",
+  "name": "VocaFlow Lern-App",
   "short_name": "VocaFlow",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f6f8fc",
-  "theme_color": "#7138f4",
+  "theme_color": "#7243e8",
   "lang": "de"
 }

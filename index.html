@@ -1,21 +1,168 @@
 <!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#6f3ef3"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VocaFlow"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="css/style.css"><title>VocaFlow V11</title></head>
-<body><div class="app-shell">
-<header class="topbar"><div class="brand"><div class="brand-mark">📖</div><div><h1>VocaFlow</h1><p>Dein Vokabeltrainer</p></div></div><div class="hello"><div class="avatar">👧🏻</div><div><h2>Hallo Jule! 👋</h2><p>Schön, dass du wieder da bist.</p></div></div></header>
-<main class="dashboard" id="homeView">
-<section class="quick-grid">
-<button class="feature-card purple" data-view="learn"><div class="icon">🎯</div><h3>Heute lernen</h3><p>Empfohlene Wörter für dich</p><span>Jetzt starten →</span></button>
-<button class="feature-card blue" data-view="units"><div class="icon">📘</div><h3>Units</h3><p>Alle Klassen und Units im Überblick</p><span>Anzeigen →</span></button>
-<button class="feature-card green" data-view="progress"><div class="icon">📊</div><h3>Fortschritt</h3><p>Deine Statistiken und Erfolge</p><span>Anzeigen →</span></button>
-<button class="feature-card orange" data-view="settings"><div class="icon">⚙️</div><h3>Einstellungen</h3><p>App anpassen und Verwaltung</p><span>Öffnen →</span></button>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#7243e8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/style.css">
+<title>VocaFlow V11.2</title>
+</head>
+<body>
+<div id="app">
+
+<section id="profile-screen" class="screen">
+  <div class="hero">
+    <div class="logo">📖</div>
+    <h1>VocaFlow</h1>
+    <p>Wer lernt heute?</p>
+  </div>
+  <div id="profile-list" class="profile-grid"></div>
+  <button id="add-profile" class="btn secondary">＋ Neues Profil</button>
 </section>
-<aside class="side-panel"><section class="profile-card"><div class="section-title">Dein Profil</div><div class="profile-row"><div class="avatar big">👧🏻</div><div><strong>Jule</strong><div class="profile-stats"><span>⭐ <b id="xp">0</b> XP</span><span>🔥 <b id="streak">0</b> Tage</span><span>💎 Level <b id="level">1</b></span></div></div></div><div class="level-line"><span>Nächster Level</span><span id="levelPct">0 %</span></div><div class="bar"><div id="levelBar"></div></div><small id="levelHint">Noch 100 XP bis Level 2</small></section>
-<section class="recommend-card"><div class="section-title">Heute empfohlen</div><div class="recommend-main"><div class="book">📕</div><div><h3>Klasse 5 – Wiederholung</h3><p>320 Wörter</p></div></div><div class="recommend-meta"><span>🗂️ 20 Wörter</span><span>🕒 ca. 8 Minuten</span></div><button class="primary-btn" id="startRecommended">▶ Jetzt lernen</button></section></aside>
-<section class="bottom-widgets"><div class="streak-card"><div class="fire">🔥</div><div><span>Lernserie</span><strong><span id="streakBig">0</span> Tage</strong><small>Weiter so!</small></div><div class="week" id="weekDots"></div></div><div class="goal-card"><div><span>Tagesziel</span><strong>⭐ <span id="goalDone">0</span> / <span id="goalTarget">15</span> Wörter</strong></div><div class="bar"><div id="goalBar"></div></div></div></section>
-</main>
-<section class="page hidden" id="page-units"><div class="page-head"><button class="back-btn">← Zurück</button><div><h2>Units</h2><p>Wähle eine Klasse und eine Unit.</p></div></div><div id="unitCards" class="unit-cards"></div></section>
-<section class="page hidden" id="page-learn"><div class="page-head"><button class="back-btn">← Zurück</button><div><h2>Lernen</h2><p id="learnContext">Klasse 5 – Wiederholung</p></div></div><div class="learn-layout"><div class="learn-card"><div class="learn-meta"><span id="learnCounter">1 / 20</span><span id="learnStatus">Neu</span></div><div class="learn-label">DEUTSCH</div><div class="learn-word" id="learnDe">–</div><input id="answerInput" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Englisches Wort eingeben …"><div class="learn-actions"><button class="ghost-btn" id="hintBtn">💡 Hinweis</button><button class="ghost-btn" id="dontKnowBtn">🤷 Weiß ich nicht</button><button class="primary-btn" id="checkBtn">Antwort prüfen</button></div><div id="feedback" class="feedback"></div></div><aside class="hint-card"><div class="section-title">Merkhilfe</div><div class="hint-emoji" id="hintEmoji">🧠</div><div id="hintText">Noch kein Hinweis geöffnet.</div></aside></div></section>
-<section class="page hidden" id="page-progress"><div class="page-head"><button class="back-btn">← Zurück</button><div><h2>Fortschritt</h2><p>Dein aktueller Lernstand.</p></div></div><div class="progress-grid"><div class="metric"><span>Heute</span><strong id="statLearned">0</strong></div><div class="metric"><span>Gemeistert</span><strong id="statMastered">0</strong></div><div class="metric"><span>Fehlerwörter</span><strong id="statErrors">0</strong></div><div class="metric"><span>XP</span><strong id="statXp">0</strong></div></div></section>
-<section class="page hidden" id="page-settings"><div class="page-head"><button class="back-btn">← Zurück</button><div><h2>Einstellungen</h2><p>App anpassen und Vokabeln verwalten.</p></div></div><div class="settings-grid"><label><span>Tagesziel</span><select id="dailyGoal"><option>10</option><option selected>15</option><option>20</option><option>30</option></select></label><label><span>Englisch</span><select id="accent"><option value="en-GB" selected>🇬🇧 British English</option><option value="en-US">🇺🇸 American English</option></select></label><div class="import-card"><h3>➕ Neue Unit importieren</h3><p>CSV/TSV mit Spalten Deutsch, Englisch, Klasse, Unit, Thema.</p><input id="importFile" type="file" accept=".csv,.tsv,.txt"><button class="ghost-btn" id="clearCustom">Eigene importierte Wörter löschen</button><small id="importStatus"></small></div></div></section>
-<nav class="tabbar"><button class="active" data-view="home">⌂<span>Home</span></button><button data-view="units">▣<span>Units</span></button><button data-view="learn">▶<span>Lernen</span></button><button data-view="progress">▥<span>Statistik</span></button><button data-view="settings">⚙<span>Einstellungen</span></button></nav>
-</div><script src="js/app.js"></script><script src="js/trainer.js"></script><script src="js/hints.js"></script><script src="js/rewards.js"></script><script src="js/import.js"></script></body></html>
+
+<section id="main-screen" class="screen hidden">
+  <header class="topbar">
+    <div class="brand">📖 <strong>VocaFlow</strong></div>
+    <button id="profile-chip" class="profile-chip"></button>
+  </header>
+
+  <main id="home-view" class="view">
+    <section class="welcome card">
+      <div>
+        <span class="eyebrow">Willkommen zurück</span>
+        <h2 id="welcome-name">Hallo!</h2>
+        <p id="mission-copy"></p>
+      </div>
+      <div id="world-badge" class="world-badge"></div>
+    </section>
+
+    <section class="feature-grid">
+      <button class="feature purple" data-view="english"><span>🇬🇧</span><h3>Englisch</h3><p>Klasse 5 wiederholen, Klasse 6 später nach Units.</p></button>
+      <button class="feature green" data-view="math"><span>✖️</span><h3>1×1-Abenteuer</h3><p>Spielerisch üben und schwierige Aufgaben häufiger sehen.</p></button>
+      <button class="feature blue" data-view="progress"><span>📈</span><h3>Fortschritt</h3><p>Stärken, Schwächen, XP und Lernserie.</p></button>
+      <button class="feature orange" data-view="rewards"><span id="reward-home-icon">🐱</span><h3>Meine Welt</h3><p id="reward-home-text"></p></button>
+    </section>
+
+    <section class="stats-row">
+      <div class="stat card"><span>⭐ XP</span><strong id="home-xp">0</strong></div>
+      <div class="stat card"><span>🔥 Serie</span><strong><b id="home-streak">0</b> Tage</strong></div>
+      <div class="stat card"><span>🎯 Heute</span><strong><b id="home-today">0</b> Aufgaben</strong></div>
+    </section>
+  </main>
+
+  <main id="english-view" class="view hidden">
+    <div class="page-head"><button class="back">←</button><div><span class="eyebrow">Englisch</span><h2>Vokabeln</h2></div></div>
+    <div id="english-units" class="unit-grid"></div>
+  </main>
+
+  <main id="english-learn-view" class="view hidden">
+    <div class="page-head"><button class="back" data-back="english">←</button><div><span class="eyebrow">Englisch</span><h2 id="eng-title">Lernen</h2></div></div>
+    <div class="learn-grid">
+      <section class="learn-card card">
+        <div class="learn-meta"><span id="eng-counter"></span><span>Deutsch → Englisch</span></div>
+        <div id="eng-de" class="big-word">–</div>
+        <input id="eng-answer" class="answer" placeholder="Englische Übersetzung" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <div class="actions">
+          <button id="eng-hint" class="btn secondary">💡 Hinweis</button>
+          <button id="eng-dontknow" class="btn secondary">🤷 Weiß ich nicht</button>
+          <button id="eng-check" class="btn primary">Prüfen</button>
+        </div>
+        <div id="eng-feedback" class="feedback"></div>
+      </section>
+      <aside class="hint card"><div class="hint-icon">🧠</div><h3>Merkhilfe</h3><p id="eng-hint-text">Nur bei Bedarf öffnen.</p></aside>
+    </div>
+  </main>
+
+  <main id="math-view" class="view hidden">
+    <div class="page-head"><button class="back">←</button><div><span class="eyebrow">Mathe</span><h2>1×1-Abenteuer</h2></div></div>
+
+    <section class="world card">
+      <div id="math-world-icon" class="world-icon">🐱</div>
+      <div><span class="eyebrow">Deine Welt</span><h3 id="math-world-title">Katzenparadies</h3><p id="math-world-copy"></p></div>
+    </section>
+
+    <section class="mode-grid">
+      <button class="mode" data-mode="learn">🧠<b>Lernen</b><small>Ohne Zeitdruck</small></button>
+      <button class="mode" data-mode="smart">🎯<b>Schwächen</b><small>Schwierige Aufgaben häufiger</small></button>
+      <button class="mode" data-mode="blitz">⚡<b>Blitzrunde</b><small>10 Aufgaben</small></button>
+      <button class="mode" data-mode="boss">👑<b>Bosskampf</b><small>Eine Reihe meistern</small></button>
+    </section>
+
+    <section class="card tables-card">
+      <div class="section-head"><h3>Reihen auswählen</h3><button id="all-tables" class="link">Alle</button></div>
+      <div id="table-buttons" class="table-grid"></div>
+    </section>
+  </main>
+
+  <main id="math-play-view" class="view hidden">
+    <div class="page-head"><button class="back" data-back="math">←</button><div><span class="eyebrow">1×1</span><h2 id="math-title">Training</h2></div></div>
+    <div class="learn-grid">
+      <section class="learn-card card">
+        <div class="learn-meta"><span id="math-counter">1 / 10</span><span id="math-score">0 richtig</span></div>
+        <div id="math-char" class="math-char">🐱</div>
+        <div id="math-question" class="math-question">7 × 8</div>
+        <input id="math-answer" class="answer math-input" inputmode="numeric" placeholder="?">
+        <div class="actions two">
+          <button id="math-dontknow" class="btn secondary">🤷 Weiß ich nicht</button>
+          <button id="math-check" class="btn primary">Antwort prüfen</button>
+        </div>
+        <div id="math-feedback" class="feedback"></div>
+      </section>
+      <aside class="hint card"><div id="math-tip-icon" class="hint-icon">🕷️</div><h3>Lerntipp</h3><p id="math-tip"></p></aside>
+    </div>
+  </main>
+
+  <main id="progress-view" class="view hidden">
+    <div class="page-head"><button class="back">←</button><div><span class="eyebrow">Übersicht</span><h2>Fortschritt</h2></div></div>
+    <div class="stats-row">
+      <div class="stat card"><span>⭐ XP</span><strong id="p-xp">0</strong></div>
+      <div class="stat card"><span>🇬🇧 Vokabeln</span><strong id="p-eng">0</strong></div>
+      <div class="stat card"><span>✖️ Mathe</span><strong id="p-math">0</strong></div>
+    </div>
+    <section class="card mastery-card"><h3>1×1-Lernstand</h3><div id="mastery-grid" class="mastery-grid"></div></section>
+  </main>
+
+  <main id="rewards-view" class="view hidden">
+    <div class="page-head"><button class="back">←</button><div><span class="eyebrow">Belohnungen</span><h2>Meine Welt</h2></div></div>
+    <section id="reward-world" class="card reward-world"></section>
+  </main>
+
+  <nav class="tabbar">
+    <button data-view="home" class="active">⌂<span>Home</span></button>
+    <button data-view="english">🇬🇧<span>Englisch</span></button>
+    <button data-view="math">✖️<span>1×1</span></button>
+    <button data-view="progress">📈<span>Fortschritt</span></button>
+  </nav>
+</section>
+
+<div id="profile-modal" class="modal hidden">
+  <form id="profile-form" class="modal-card">
+    <h2>Neues Profil</h2>
+    <label>Name<input id="profile-name" required maxlength="20"></label>
+    <label>Belohnungswelt
+      <select id="profile-theme">
+        <option value="cats">🐱 Katzenparadies</option>
+        <option value="football">⚽ Fußballakademie</option>
+      </select>
+    </label>
+    <label>Avatar
+      <select id="profile-avatar"><option>👧🏻</option><option>👦🏻</option><option>😊</option><option>😎</option><option>🐱</option><option>⚽</option></select>
+    </label>
+    <div class="actions two">
+      <button type="button" id="profile-cancel" class="btn secondary">Abbrechen</button>
+      <button class="btn primary">Profil anlegen</button>
+    </div>
+  </form>
+</div>
+
+<div id="fx-layer"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/app.js"></script>
+<script src="js/english.js"></script>
+<script src="js/math.js"></script>
+<script src="js/rewards.js"></script>
+</body>
+</html>

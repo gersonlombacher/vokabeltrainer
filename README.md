@@ -1,3 +1,15 @@
-# VocaFlow V11.0
+# VocaFlow V11.2
 
-Neue modulare Web-App-Grundlage. Enthält die 320 Wörter aus Klasse 5 als Wiederholung und einen CSV/TSV-Import für spätere Klasse-6-Units.
+Neu:
+- mehrere Profile
+- Katzenparadies oder Fußballakademie je Profil
+- eigener Lernstand pro Profil
+- Englisch: 320 Klasse-5-Wiederholungswörter
+- 1×1 mit Lernen, Schwächen-Training, Blitzrunde und Bosskampf
+- adaptive Gewichtung schwieriger Aufgaben
+- XP, Level und Belohnungswelt
+- 1×1-Fortschritt je Reihe
+- responsive für iPhone/iPad/Mac
+- PWA/Offline-Grundlage
+
+Nächster Schritt: Memory/Ballon-Spiel, Klasse-6-Import und echte Sammelkarten.
