@@ -91,6 +91,23 @@
     </section>
 
     
+    <section class="card sequence-card">
+      <div class="section-head">
+        <div><span class="eyebrow">Grundlage</span><h3>🔢 Reihen lernen</h3></div>
+        <span class="sequence-badge">2er bis 10er</span>
+      </div>
+      <p class="sequence-intro">Erst die Zahlenfolge sicher können – dann wird das 1×1 leichter.</p>
+      <div class="sequence-row">
+        <label for="sequence-select">Reihe</label>
+        <select id="sequence-select" class="sequence-select">
+          <option value="2">2er-Reihe</option><option value="3">3er-Reihe</option><option value="4">4er-Reihe</option>
+          <option value="5">5er-Reihe</option><option value="6">6er-Reihe</option><option value="7">7er-Reihe</option>
+          <option value="8">8er-Reihe</option><option value="9">9er-Reihe</option><option value="10">10er-Reihe</option>
+        </select>
+        <button id="sequence-start" class="btn primary">Reihe lernen</button>
+      </div>
+    </section>
+
     <section class="card memorize-card">
       <div class="section-head">
         <div>
@@ -156,6 +173,38 @@
   </main>
 
   
+  <main id="sequence-view" class="view hidden">
+    <div class="page-head">
+      <button class="back" data-back="math">←</button>
+      <div><span class="eyebrow">Reihen lernen</span><h2 id="sequence-title">2er-Reihe</h2></div>
+    </div>
+    <section class="sequence-learn card">
+      <div class="sequence-steps" id="sequence-steps"></div>
+      <div class="sequence-numberline" id="sequence-numberline"></div>
+      <div class="sequence-actions">
+        <button id="sequence-play" class="btn secondary">🔊 Reihe vorlesen</button>
+        <button id="sequence-practice" class="btn secondary">🧩 Lücken üben</button>
+        <button id="sequence-speak" class="btn primary">🎤 Reihe aufsagen</button>
+      </div>
+      <div id="sequence-speech-box" class="speech-box hidden">
+        <div class="speech-status"><span id="speech-indicator">🎤</span><strong id="speech-status-text">Sprich die Reihe deutlich und mit kleinen Pausen.</strong></div>
+        <div id="speech-live" class="speech-live"></div>
+        <div class="speech-controls">
+          <button id="speech-stop" class="btn secondary">Stopp</button>
+          <button id="speech-retry" class="btn secondary">Nochmal</button>
+        </div>
+      </div>
+      <div id="sequence-practice-box" class="practice-box hidden">
+        <div id="practice-line" class="practice-line"></div>
+        <div class="practice-input-row">
+          <input id="practice-input" inputmode="numeric" class="answer math-input" placeholder="?">
+          <button id="practice-check" class="btn primary">Prüfen</button>
+        </div>
+      </div>
+      <div id="sequence-feedback" class="feedback"></div>
+    </section>
+  </main>
+
   <main id="memorize-view" class="view hidden">
     <div class="page-head">
       <button class="back" data-back="math">←</button>
@@ -262,5 +311,6 @@
 <script src="js/math.js"></script>
 <script src="js/rewards.js"></script>
 <script src="js/memorize.js"></script>
+<script src="js/sequence.js"></script>
 </body>
 </html>

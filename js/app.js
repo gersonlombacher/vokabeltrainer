@@ -1,5 +1,5 @@
 
-const views=["home","english","english-learn","math","math-play","memorize","progress","rewards"];
+const views=["home","english","english-learn","math","math-play","sequence","memorize","progress","rewards"];
 function showView(v){views.forEach(x=>document.querySelector(`#${x}-view`)?.classList.add("hidden"));document.querySelector(`#${v}-view`)?.classList.remove("hidden");document.querySelectorAll(".tabbar button").forEach(b=>b.classList.toggle("active",b.dataset.view===v));if(v==="math")renderMathWorld();if(v==="progress")renderProgress();if(v==="rewards")renderRewards()}
 function renderProfiles(){const box=document.querySelector("#profile-list");box.innerHTML="";db.profiles.forEach(p=>{const b=document.createElement("button");b.className="profile-btn";b.innerHTML=`<div class="av">${p.avatar}</div><strong>${p.name}</strong><small>${p.theme==="cats"?"🐱 Katzenparadies":"⚽ Fußballakademie"}</small>`;b.onclick=()=>chooseProfile(p.id);box.appendChild(b)})}
 function chooseProfile(id){db.activeProfileId=id;saveDB();document.querySelector("#profile-screen").classList.add("hidden");document.querySelector("#main-screen").classList.remove("hidden");renderHome()}
