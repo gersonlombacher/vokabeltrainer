@@ -1,15 +1,35 @@
-# VocaFlow V11.5 – Reihen lernen + Sprache
+# VocaFlow V11.6 – vereinfachter Mathebereich
 
-Neu:
-- Reihen lernen von 2 bis 10
-- Zahlenfolgen 2,4,6,8... / 3,6,9,12... usw.
-- Zahlensprünge werden sichtbar dargestellt
-- Vorlesen der ganzen Reihe
-- Lückenübungen
-- Reihe laut aufsagen und durch Browser-Spracherkennung kontrollieren, wenn unterstützt
-- Fehlerhinweis wie „Nach 18 kommt 21“
-- richtige/falsche erkannte Stellen werden markiert
-- erfolgreiche Reihe gibt XP
+Die Mathe-Startseite wurde komplett vereinfacht.
 
-Hinweis:
-Die Spracherkennung hängt vom Browser und Betriebssystem ab. Auf iPhone/iPad kann Safari je nach iOS-Version Einschränkungen haben.
+Neue Bedienung:
+1. Was möchtest du üben?
+   - Reihen lernen
+   - Aufgaben rechnen
+   - Auswendig lernen
+2. Erst danach erscheint die passende Auswahl.
+3. Keine drei verschiedenen Systeme mehr gleichzeitig auf einer Seite.
+
+Reihen lernen:
+- Reihe auswählen
+- Anhören
+- Aufsagen mit Spracherkennung (wenn verfügbar)
+- Lücken üben
+
+Aufgaben rechnen:
+- Mit Hilfe
+- Schwierige Aufgaben
+- Blitzrunde
+- Eine Reihe meistern
+- Hilfe heißt jetzt kindgerechter:
+  - Ich brauche Hilfe
+  - Ein bisschen Hilfe
+  - Ich kann es alleine
+
+Auswendig lernen:
+- Blitzkarten
+- Glücksrad
+- Rhythmus
+- Reihen separat auswählbar
+
+Bestehende Lernlogik, Profile, Englisch, XP und Belohnungen bleiben erhalten.
