@@ -61,15 +61,22 @@ function renderMemorize(){
   document.querySelector("#memorize-feedback").textContent="";
   document.querySelector("#flash-card").classList.remove("flipped");
 
-  document.querySelector("#flash-wrap").classList.toggle("hidden",memorizeMode==="rhythm");
+  document.querySelector("#flash-wrap").classList.toggle("hidden",memorizeMode!=="flash");
   document.querySelector("#wheel-wrap").classList.toggle("hidden",memorizeMode!=="wheel");
   document.querySelector("#rhythm-wrap").classList.toggle("hidden",memorizeMode!=="rhythm");
 
-  if(memorizeMode==="flash" || memorizeMode==="wheel"){
+  if(memorizeMode==="flash"){
     document.querySelector("#flash-question").textContent=`${q.a} × ${q.b}`;
     document.querySelector("#flash-answer").textContent=q.answer;
     document.querySelector("#flash-memory").textContent=`Sprich laut: ${q.a} × ${q.b} = ${q.answer}`;
   }
+
+  if(memorizeMode==="wheel"){
+    document.querySelector("#wheel-question-box").classList.add("hidden");
+    document.querySelector("#wheel-answer-input").value="";
+    document.querySelector("#spin-wheel").disabled=false;
+  }
+
   if(memorizeMode==="rhythm"){
     document.querySelector("#rhythm-line").textContent=`${q.a} mal ${q.b} ist ${q.answer}`;
     speakRhythm();
@@ -103,7 +110,11 @@ function speakRhythm(){
   speechSynthesis.cancel();
   const phrase=`${q.a} mal ${q.b} ist ${q.answer}`;
   const u=new SpeechSynthesisUtterance(phrase);
-  u.lang="de-DE";u.rate=.82;u.pitch=1.05;
+  u.lang="de-DE";u.rate=.8;u.pitch=1.0;
+  const voices=speechSynthesis.getVoices()||[];
+  const v=voices.find(v=>/^de(-|_)/i.test(v.lang||"") && /Anna|Helena|Petra|Marlene|Vicki|Katja|Sandy|female|enhanced|premium|natural/i.test(v.name||""))
+       || voices.find(v=>/^de(-|_)/i.test(v.lang||""));
+  if(v)u.voice=v;
   speechSynthesis.speak(u);
 }
 
@@ -127,10 +138,31 @@ document.querySelector("#spin-wheel").addEventListener("click",()=>{
   const wheel=document.querySelector("#wheel");
   const turns=1080+Math.floor(Math.random()*720);
   wheel.style.transform=`rotate(${turns}deg)`;
+  document.querySelector("#spin-wheel").disabled=true;
   document.querySelector("#memorize-feedback").textContent="🎡 Das Rad dreht …";
+  document.querySelector("#wheel-question-box").classList.add("hidden");
   setTimeout(()=>{
     wheelBusy=false;
-    document.querySelector("#memorize-feedback").textContent="Aufgabe steht fest – löse die Karte!";
-    document.querySelector("#flash-card").classList.remove("flipped");
+    const q=memorizeQuestion();
+    document.querySelector("#wheel-question").textContent=`${q.a} × ${q.b}`;
+    document.querySelector("#wheel-question-box").classList.remove("hidden");
+    document.querySelector("#memorize-feedback").textContent="Jetzt die Lösung selbst eingeben.";
+    document.querySelector("#wheel-answer-input").focus();
   },1450);
+});
+
+document.querySelector("#wheel-check").addEventListener("click",()=>{
+  const q=memorizeQuestion(); if(!q)return;
+  const val=Number(document.querySelector("#wheel-answer-input").value);
+  if(!Number.isFinite(val))return;
+  if(val===q.answer){
+    document.querySelector("#memorize-feedback").textContent="✅ Richtig!";
+    recordMemorize(true);
+  }else{
+    document.querySelector("#memorize-feedback").textContent="❌ Noch nicht. Versuch es noch einmal.";
+    document.querySelector("#wheel-answer-input").select();
+  }
+});
+document.querySelector("#wheel-answer-input").addEventListener("keydown",e=>{
+  if(e.key==="Enter")document.querySelector("#wheel-check").click();
 });

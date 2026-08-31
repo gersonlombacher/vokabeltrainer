@@ -253,6 +253,7 @@
     <section class="sequence-learn card">
       <div class="sequence-steps" id="sequence-steps"></div>
       <div class="sequence-numberline" id="sequence-numberline"></div>
+      <div id="sequence-preview-note" class="preview-note">👀 Schau dir die Reihe kurz an. Danach wird sie ausgeblendet.</div>
       <div class="sequence-actions">
         <button id="sequence-play" class="btn secondary">🔊 Reihe vorlesen</button>
         <button id="sequence-practice" class="btn secondary">🧩 Lücken üben</button>
@@ -289,11 +290,22 @@
         <span id="memorize-score">0 sicher</span>
       </div>
 
+      
       <div id="wheel-wrap" class="wheel-wrap hidden">
-        <div id="wheel" class="wheel">
-          <div class="wheel-center">🎡</div>
+        <div class="wheel-stage">
+          <div class="wheel-pointer">▼</div>
+          <div id="wheel" class="wheel">
+            <div class="wheel-center">🎡</div>
+          </div>
         </div>
         <button id="spin-wheel" class="btn primary">Rad drehen</button>
+
+        <div id="wheel-question-box" class="wheel-question-box hidden">
+          <span class="eyebrow">Deine Aufgabe</span>
+          <div id="wheel-question" class="wheel-question">7 × 8</div>
+          <input id="wheel-answer-input" class="answer math-input" inputmode="numeric" pattern="[0-9]*" placeholder="?">
+          <button id="wheel-check" class="btn primary">Antwort prüfen</button>
+        </div>
       </div>
 
       <div id="flash-wrap" class="flash-wrap">
@@ -355,6 +367,33 @@
   </nav>
 </section>
 
+
+<div id="boss-modal" class="modal hidden">
+  <div class="modal-card boss-modal-card">
+    <div class="boss-modal-head">
+      <div>
+        <span class="eyebrow">👑 Bosskampf</span>
+        <h2>Welche Reihe möchtest du meistern?</h2>
+      </div>
+      <button id="boss-close" type="button" class="boss-close" aria-label="Schließen">✕</button>
+    </div>
+
+    <div class="boss-grid">
+      <button type="button" class="boss-row" data-boss-row="2"><span>2</span><b>2er-Reihe</b></button>
+      <button type="button" class="boss-row" data-boss-row="3"><span>3</span><b>3er-Reihe</b></button>
+      <button type="button" class="boss-row" data-boss-row="4"><span>4</span><b>4er-Reihe</b></button>
+      <button type="button" class="boss-row" data-boss-row="5"><span>5</span><b>5er-Reihe</b></button>
+      <button type="button" class="boss-row" data-boss-row="6"><span>6</span><b>6er-Reihe</b></button>
+      <button type="button" class="boss-row" data-boss-row="7"><span>7</span><b>7er-Reihe</b></button>
+      <button type="button" class="boss-row" data-boss-row="8"><span>8</span><b>8er-Reihe</b></button>
+      <button type="button" class="boss-row" data-boss-row="9"><span>9</span><b>9er-Reihe</b></button>
+      <button type="button" class="boss-row" data-boss-row="10"><span>10</span><b>10er-Reihe</b></button>
+    </div>
+
+    <p class="boss-note">10 Aufgaben · ohne Zeitdruck · eine Reihe</p>
+  </div>
+</div>
+
 <div id="profile-modal" class="modal hidden">
   <form id="profile-form" class="modal-card">
     <h2>Neues Profil</h2>
@@ -377,13 +416,13 @@
 
 <div id="fx-layer"></div>
 
-<script src="js/storage.js?v=120"></script>
-<script src="js/app.js?v=120"></script>
-<script src="js/english.js?v=120"></script>
-<script src="js/math.js?v=120"></script>
-<script src="js/math-ui.js?v=120"></script>
-<script src="js/rewards.js?v=120"></script>
-<script src="js/memorize.js?v=120"></script>
-<script src="js/sequence.js?v=120"></script>
+<script src="js/storage.js?v=123"></script>
+<script src="js/app.js?v=123"></script>
+<script src="js/english.js?v=123"></script>
+<script src="js/math.js?v=123"></script>
+<script src="js/math-ui.js?v=123"></script>
+<script src="js/rewards.js?v=123"></script>
+<script src="js/memorize.js?v=123"></script>
+<script src="js/sequence.js?v=123"></script>
 </body>
 </html>

@@ -327,3 +327,116 @@
 @media(max-width:430px){
   .rows-v12-grid{grid-template-columns:1fr}
 }
+
+/* V12.1: Lernen ohne Ablesen */
+.preview-note{
+  margin:4px 0 14px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:#fff8e5;
+  border:1px solid #eedba1;
+  color:#5d4a18;
+  font-weight:800;
+  text-align:center;
+}
+.sequence-step.preview-hidden,
+.sequence-hop.preview-hidden{
+  color:transparent!important;
+  text-shadow:none!important;
+  background:#f7f8fb!important;
+}
+.sequence-step.preview-hidden small,
+.sequence-hop.preview-hidden small{
+  visibility:hidden!important;
+}
+.sequence-step.preview-hidden::after,
+.sequence-hop.preview-hidden::after{
+  content:"?";
+  color:#9aa4b2;
+  font-size:26px;
+  font-weight:900;
+}
+.wheel-stage{position:relative;display:grid;place-items:center}
+.wheel-pointer{font-size:28px;line-height:1;margin-bottom:-8px;z-index:2}
+.wheel-question-box{
+  display:grid;
+  justify-items:center;
+  gap:12px;
+  margin-top:8px;
+  padding:16px;
+  width:min(520px,100%);
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#fbfcfe;
+}
+.wheel-question{font-size:56px;font-weight:900}
+#wheel-answer-input{max-width:220px;text-align:center;font-size:30px}
+#wheel-check{min-width:220px}
+
+/* V12.2 Bosskampf-Auswahl */
+.boss-modal-card{
+  width:min(760px,100%);
+  padding:24px;
+  border-radius:28px;
+}
+.boss-modal-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+.boss-modal-head h2{
+  margin:5px 0 18px;
+  font-size:28px;
+}
+.boss-close{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:#fff;
+  font-weight:900;
+}
+.boss-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+.boss-row{
+  min-height:120px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:linear-gradient(145deg,#fff,#f2edff);
+  box-shadow:var(--shadow);
+  padding:16px;
+  text-align:left;
+}
+.boss-row span{
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid var(--border);
+  color:var(--purple);
+  font-size:23px;
+  font-weight:900;
+}
+.boss-row b{
+  display:block;
+  margin-top:12px;
+  font-size:18px;
+}
+.boss-note{
+  margin:16px 0 0;
+  text-align:center;
+  color:var(--muted);
+  font-weight:800;
+}
+@media(max-width:650px){
+  .boss-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .boss-modal-card{padding:18px}
+  .boss-modal-head h2{font-size:23px}
+  .boss-row{min-height:105px}
+}
