@@ -110,4 +110,49 @@ document.querySelectorAll("[data-mode]").forEach(btn=>{
   });
 });
 
+
+function submitMathAnswer(){
+  const q=session[pos];
+  if(!q)return;
+
+  const input=document.querySelector("#math-answer");
+  const raw=String(input.value||"").trim();
+  if(raw===""){
+    document.querySelector("#math-feedback").textContent="Bitte gib zuerst eine Zahl ein.";
+    input.focus();
+    return;
+  }
+
+  const value=Number(raw);
+  const ok=value===q.answer;
+  record(q,ok);
+
+  if(ok){
+    right++;
+    document.querySelector("#math-feedback").textContent="✅ Richtig!";
+    burst(profile()?.theme==="cats"?"🐾":"⚽");
+    pos++;
+    setTimeout(renderQ,550);
+  }else{
+    document.querySelector("#math-feedback").textContent="❌ Noch nicht. Versuch es noch einmal.";
+    input.select();
+  }
+}
+
+function mathDontKnow(){
+  const q=session[pos];
+  if(!q)return;
+  record(q,false);
+  document.querySelector("#math-feedback").textContent=`Die Lösung ist ${q.answer}.`;
+  pos++;
+  setTimeout(renderQ,1100);
+}
+
+document.querySelector("#math-check")?.addEventListener("click",submitMathAnswer);
+document.querySelector("#math-answer")?.addEventListener("keydown",e=>{
+  if(e.key==="Enter")submitMathAnswer();
+});
+document.querySelector("#math-dontknow")?.addEventListener("click",mathDontKnow);
+
+
 renderTables();

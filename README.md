@@ -1,24 +1,20 @@
-# VocaFlow V12.6 – Cache- und Bedienungsfix
+# VocaFlow V12.7 – Bosskampf & Lücken als Kacheln
 
-Diese Version behebt gezielt die drei gemeldeten Fehler:
+Behoben:
+- Bosskampf: „Antwort prüfen“ funktioniert wieder.
+- Enter-Taste prüft ebenfalls die Antwort.
+- Bei falscher Antwort bleibt die Aufgabe stehen.
+- „Weiß ich nicht“ zeigt die Lösung und geht anschließend weiter.
 
-1. Graue Mathe-Kacheln
-- falsche Farbklassen korrigiert
-- Safari-Buttondarstellung explizit überschrieben
+Neu bei Reihen lernen → Lücken:
+- keine Texteingabe mehr
+- keine Kommatrennung mehr
+- Reihe 7 Sekunden ansehen
+- danach verschwinden die oberen Übersichten
+- eine Lücke wird angezeigt
+- darunter erscheinen vier große Zahlen-Kacheln
+- Kind tippt nur auf die richtige Zahl
+- richtige Kachel wird grün, falsche kurz rot
+- nach fünf richtigen Lücken gibt es eine Erfolgsmeldung
 
-2. Auswendig lernen / Abenteuer reagiert nicht
-- math.js robuster gemacht
-- alte nicht mehr vorhandene Tabellenfläche verursacht keinen JavaScript-Abbruch mehr
-- Bosskampf bleibt als Kachelauswahl ohne Browser-Prompt
-
-3. Reihen / Lücken blenden nicht aus
-- Countdown komplett neu geschrieben
-- zählt wirklich 7 → 1
-- danach werden beide oberen Zahlenübersichten vollständig versteckt
-- erst danach erscheint die Gedächtnis-Lückenaufgabe
-- beim Aufsagen beginnt die Spracherkennung erst nach dem Ausblenden
-
-Wichtig:
-Der bisherige Service Worker wurde in V12.6 bewusst deaktiviert und der Browser-Cache beim ersten Start einmal gelöscht, damit nicht mehr alte HTML-, CSS- und JS-Versionen gemischt werden.
-
-Unten rechts steht klein „V12.6“. Daran ist sofort erkennbar, ob die richtige Version geladen wurde.
+Version: V12.7 / ?v=127
