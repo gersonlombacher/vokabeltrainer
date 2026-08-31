@@ -7,32 +7,35 @@ function renderTables(){const box=document.querySelector("#table-buttons");box.i
 function renderMathWorld(){const p=profile();if(!p)return;const cats=p.theme==="cats";document.querySelector("#math-world-icon").textContent=cats?"🐱":"⚽";document.querySelector("#math-world-title").textContent=cats?"Katzenparadies":"Fußballakademie";document.querySelector("#math-world-copy").textContent=cats?"Sammle Pfoten und schalte neue Katzen frei.":"Trainiere und baue deine Fußballakademie aus."}
 function weakness(p,a,b){const r=p.math[`${a}x${b}`];return r.wrong*3-r.right+Math.random()}
 function makeQ(p,smart,forced){let tables=forced?[forced]:[...selected];if(!tables.length)tables=[2,3,4,5,6,7,8,9,10];let cs=[];tables.forEach(a=>{for(let b=1;b<=10;b++)cs.push({a,b})});if(smart)cs.sort((x,y)=>weakness(p,y.a,y.b)-weakness(p,x.a,x.b));const q=smart?cs[Math.floor(Math.random()*Math.min(20,cs.length))]:cs[Math.floor(Math.random()*cs.length)];return {...q,answer:q.a*q.b}}
+
 function startMath(m,forcedRow=null){
-  const p=profile();ensureMath(p);
-  mode=m;pos=0;right=0;
+  const p=profile();
+  ensureMath(p);
+  mode=m;
+  pos=0;
+  right=0;
+
   let forced=null;
   if(m==="boss"){
     forced=Number(forcedRow);
-    if(!(forced>=2&&forced<=10)){
+    if(!(forced>=2 && forced<=10)){
       openBossPicker();
       return;
     }
   }
+
   session=Array.from({length:10},()=>makeQ(p,m==="smart",forced));
-  document.querySelector("#math-title").textContent=m==="boss"?`${forced}er-Boss`:m==="smart"?"Schwächen trainieren":m==="blitz"?"Blitzrunde":"Lernen";
+  document.querySelector("#math-title").textContent=
+    m==="boss" ? `${forced}er-Bosskampf` :
+    m==="smart" ? "Schwächen trainieren" :
+    m==="blitz" ? "Blitzrunde" : "Lernen";
+
   showView("math-play");
   renderQ();
-}session=Array.from({length:10},()=>makeQ(p,m==="smart",forced));document.querySelector("#math-title").textContent=m==="boss"?`${forced}er-Boss`:m==="smart"?"Schwächen trainieren":m==="blitz"?"Blitzrunde":"Lernen";showView("math-play");renderQ()}
+}
+
 function renderQ(){const q=session[pos];if(!q){document.querySelector("#math-feedback").textContent=`🎉 ${right} von 10 richtig!`;setTimeout(()=>showView("math"),1200);return}const p=profile();document.querySelector("#math-counter").textContent=`${pos+1} / 10`;document.querySelector("#math-score").textContent=`${right} richtig`;document.querySelector("#math-char").textContent=p.theme==="cats"?"🐱":"⚽";document.querySelector("#math-question").textContent=`${q.a} × ${q.b}`;document.querySelector("#math-answer").value="";document.querySelector("#math-feedback").textContent="";renderMathHelp(q);document.querySelector("#math-answer").focus()}
 function record(q,ok){const p=profile();ensureMath(p);const r=p.math[`${q.a}x${q.b}`];ok?(r.right++,r.streak++):(r.wrong++,r.streak=0);p.mathCount++;p.today++;if(ok)p.xp+=5;saveDB();renderHome()}
-document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{
-  if(b.dataset.mode==="boss") openBossPicker();
-  else startMath(b.dataset.mode);
-});
-document.querySelector("#math-check").onclick=()=>{const q=session[pos];if(!q)return;const n=Number(document.querySelector("#math-answer").value);if(!Number.isFinite(n))return;const ok=n===q.answer;record(q,ok);if(ok){right++;document.querySelector("#math-feedback").textContent="⭐ Richtig! +5 XP";burst(profile().theme==="cats"?"🐾":"⚽")}else{document.querySelector("#math-feedback").innerHTML=`Fast. <b>${q.a} × ${q.b} = ${q.answer}</b>`;shake(document.querySelector(".learn-card"))}setTimeout(()=>{pos++;renderQ()},ok?450:900)};
-document.querySelector("#math-answer").onkeydown=e=>{if(e.key==="Enter")document.querySelector("#math-check").click()};
-document.querySelector("#math-dontknow").onclick=()=>{const q=session[pos];if(!q)return;record(q,false);document.querySelector("#math-feedback").innerHTML=`Kein Problem. <b>${q.a} × ${q.b} = ${q.answer}</b>`;setTimeout(()=>{pos++;renderQ()},900)};
-document.querySelector("#all-tables").onclick=()=>{selected=new Set([2,3,4,5,6,7,8,9,10]);renderTables()};
 
 function hintData(q){
   return MATH_HINTS[`${q.a}x${q.b}`] || {
@@ -95,6 +98,32 @@ document.querySelectorAll("[data-boss-row]").forEach(b=>{
     const row=Number(b.dataset.bossRow);
     closeBossPicker();
     startMath("boss",row);
+  });
+});
+
+
+function openBossPicker(){
+  document.querySelector("#boss-modal")?.classList.remove("hidden");
+}
+function closeBossPicker(){
+  document.querySelector("#boss-modal")?.classList.add("hidden");
+}
+
+document.querySelector("#boss-close")?.addEventListener("click", closeBossPicker);
+document.querySelector("#boss-modal")?.addEventListener("click", e=>{
+  if(e.target.id==="boss-modal") closeBossPicker();
+});
+document.querySelectorAll("[data-boss-row]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const row=Number(btn.dataset.bossRow);
+    closeBossPicker();
+    startMath("boss", row);
+  });
+});
+document.querySelectorAll("[data-mode]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    if(btn.dataset.mode==="boss") openBossPicker();
+    else startMath(btn.dataset.mode);
   });
 });
 

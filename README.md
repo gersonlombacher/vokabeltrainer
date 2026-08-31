@@ -1,30 +1,22 @@
-# VocaFlow V12.3 – konsolidierte Mathe-Version
+# VocaFlow V12.5 – Bosskampf & Lücken wirklich korrigiert
 
-Diese Version enthält gemeinsam:
+Behoben:
+- Bosskampf nutzt kein Browser-Eingabefenster mehr.
+- Klick auf Bosskampf öffnet die große 2er–10er-Auswahl.
+- Alle prompt()-Aufrufe wurden entfernt.
 
-## Reihen lernen
-- 2er bis 10er-Reihe
-- Reihe zunächst sichtbar
-- nach 7 Sekunden ausblenden
-- Anhören
-- Aufsagen ohne Ablesen
-- Lücken ohne reines Abschreiben
-- Spracherkennung zeigt nur interpretierte Zahlen, keinen rohen Browsertext
-- „sex“/„six“ wird intern als „sechs“ interpretiert
-- bevorzugt eine natürlichere deutsche Frauenstimme, sofern auf dem Gerät vorhanden
+Lücken:
+- Die komplette Reihe ist nur 7 Sekunden sichtbar.
+- Danach verschwinden die beiden Reihen-Übersichten vollständig.
+- Erst dann erscheint die eigentliche Lückenaufgabe.
+- In der Aufgabe selbst werden die anderen Werte nicht mehr angezeigt, sondern nur Punkte und die Lücke.
+- Damit kann das Kind nicht mehr aus der Übersicht abschreiben.
 
-## Glücksrad
-- Rad dreht sichtbar
-- danach erscheint die konkrete Malaufgabe
-- Kind muss die Lösung selbst eintippen
-- falsche Antwort bleibt stehen
-- richtige Antwort wird gewertet
+Aufsagen:
+- Reihe 7 Sekunden ansehen.
+- Danach verschwindet sie vollständig.
+- Erst dann beginnt die Spracherkennung.
 
-## Bosskampf
-- kein Browser-Prompt mehr
-- Auswahl 2er bis 10er als große Kacheln
-- Klick auf eine Reihe startet direkt 10 Aufgaben dieser Reihe
-
-## Oberfläche
-- Mathe-Hauptseite in großen, harmonischen Kacheln wie die VocaFlow-Startseite
-- Unterseiten Schritt für Schritt statt alles gleichzeitig
+Qualität:
+- Alle JavaScript-Dateien wurden mit Node auf Syntaxfehler geprüft.
+- Cache-Version auf V12.5 / ?v=125 erhöht.
