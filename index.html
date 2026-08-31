@@ -85,21 +85,21 @@
     </div>
 
     <section class="feature-grid math-v12-grid">
-      <button class="feature sky math-v12-card" data-math-page="rows">
+      <button class="feature blue math-v12-card" data-math-page="rows">
         <div class="emoji">🔢</div>
         <h3>Reihen lernen</h3>
         <p>Lerne zuerst die Zahlenfolge: 2, 4, 6, 8 …</p>
         <span>Reihe auswählen →</span>
       </button>
 
-      <button class="feature mint math-v12-card" data-math-page="understand">
+      <button class="feature green math-v12-card" data-math-page="understand">
         <div class="emoji">🧠</div>
         <h3>Verstehen & rechnen</h3>
         <p>Mit Bildern, Zerlegen und einfachen Rechentricks.</p>
         <span>Aufgabe verstehen →</span>
       </button>
 
-      <button class="feature peach math-v12-card" data-math-page="memorize">
+      <button class="feature orange math-v12-card" data-math-page="memorize">
         <div class="emoji">🎮</div>
         <h3>Auswendig lernen</h3>
         <p>Blitzkarten, Glücksrad und Rhythmus zum Einprägen.</p>
@@ -141,13 +141,13 @@
       </div>
 
       <div class="feature-grid row-action-grid">
-        <button id="rows-listen" class="feature sky row-action-card">
+        <button id="rows-listen" class="feature blue row-action-card">
           <div class="emoji">🔊</div><h3>Anhören</h3><p>Die Reihe wird langsam vorgelesen.</p><span>Starten →</span>
         </button>
-        <button id="rows-speak" class="feature mint row-action-card">
+        <button id="rows-speak" class="feature green row-action-card">
           <div class="emoji">🎤</div><h3>Aufsagen</h3><p>Du sagst die Reihe laut. Die App prüft die Zahlen.</p><span>Mikrofon starten →</span>
         </button>
-        <button id="rows-gaps" class="feature peach row-action-card">
+        <button id="rows-gaps" class="feature orange row-action-card">
           <div class="emoji">🧩</div><h3>Lücken</h3><p>Eine Zahl fehlt – finde die richtige Zahl.</p><span>Üben →</span>
         </button>
       </div>
@@ -416,13 +416,37 @@
 
 <div id="fx-layer"></div>
 
-<script src="js/storage.js?v=125"></script>
-<script src="js/app.js?v=125"></script>
-<script src="js/english.js?v=125"></script>
-<script src="js/math.js?v=125"></script>
-<script src="js/math-ui.js?v=125"></script>
-<script src="js/rewards.js?v=125"></script>
-<script src="js/memorize.js?v=125"></script>
-<script src="js/sequence.js?v=125"></script>
+
+<script>
+(function(){
+  const KEY="vocaflow_cache_reset_126";
+  if(!sessionStorage.getItem(KEY)){
+    sessionStorage.setItem(KEY,"1");
+    const jobs=[];
+    if("serviceWorker" in navigator){
+      jobs.push(navigator.serviceWorker.getRegistrations().then(rs=>Promise.all(rs.map(r=>r.unregister()))));
+    }
+    if("caches" in window){
+      jobs.push(caches.keys().then(keys=>Promise.all(keys.map(k=>caches.delete(k)))));
+    }
+    Promise.all(jobs).finally(()=>{
+      const u=new URL(location.href);
+      u.searchParams.set("v","126");
+      u.searchParams.set("fresh","1");
+      location.replace(u.toString());
+    });
+  }
+})();
+</script>
+
+<script src="js/storage.js?v=126"></script>
+<script src="js/app.js?v=126"></script>
+<script src="js/english.js?v=126"></script>
+<script src="js/math.js?v=126"></script>
+<script src="js/math-ui.js?v=126"></script>
+<script src="js/rewards.js?v=126"></script>
+<script src="js/memorize.js?v=126"></script>
+<script src="js/sequence.js?v=126"></script>
+<div id="build-version" class="build-version">V12.6</div>
 </body>
 </html>

@@ -11,4 +11,4 @@ document.querySelector("#add-profile").onclick=()=>document.querySelector("#prof
 document.querySelector("#profile-cancel").onclick=()=>document.querySelector("#profile-modal").classList.add("hidden");
 document.querySelector("#profile-form").onsubmit=e=>{e.preventDefault();const name=document.querySelector("#profile-name").value.trim();if(!name)return;db.profiles.push({id:"p_"+Date.now(),name,avatar:document.querySelector("#profile-avatar").value,theme:document.querySelector("#profile-theme").value,xp:0,streak:0,today:0,englishCount:0,mathCount:0,math:{}});saveDB();document.querySelector("#profile-modal").classList.add("hidden");e.target.reset();renderProfiles()};
 renderProfiles();if(db.activeProfileId&&profile())chooseProfile(db.activeProfileId);
-if("serviceWorker" in navigator && location.protocol!=="file:")navigator.serviceWorker.register("./sw.js").catch(()=>{});
+/* Service Worker temporarily disabled in V12.6 to prevent stale mixed versions. */

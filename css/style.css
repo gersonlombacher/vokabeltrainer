@@ -440,3 +440,18 @@
   .boss-modal-head h2{font-size:23px}
   .boss-row{min-height:105px}
 }
+
+button.feature,button.math-v12-card,button.row-action-card{
+  -webkit-appearance:none;
+  appearance:none;
+  color:var(--text);
+  font:inherit;
+}
+button.feature.blue{background:linear-gradient(145deg,#fff,#eaf4ff)!important;}
+button.feature.green{background:linear-gradient(145deg,#fff,#eafaf2)!important;}
+button.feature.orange{background:linear-gradient(145deg,#fff,#fff0e5)!important;}
+button.feature.purple{background:linear-gradient(145deg,#fff,#f0e9ff)!important;}
+.build-version{
+  position:fixed;right:10px;bottom:8px;z-index:9999;
+  font-size:10px;color:#7f8898;opacity:.7;pointer-events:none;
+}
