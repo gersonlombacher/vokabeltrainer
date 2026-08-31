@@ -1,16 +1,19 @@
-# VocaFlow V12.8 – Lücken durch Anklicken
+# VocaFlow V12.9 – Reihen-Puzzle
 
-Reihen lernen → Lücken wurde komplett geändert:
+Letzte Änderung für heute:
 
-1. Die komplette Reihe wird 7 Sekunden gezeigt.
-2. Danach verschwinden die oberen Übersichten.
-3. In der Reihe fehlen jetzt vier Zahlen.
-4. Darunter erscheinen genau diese vier Zahlen als gemischte Kacheln.
-5. Das Kind tippt die Zahlen von links nach rechts in der richtigen Reihenfolge an.
-6. Richtige Auswahl wird grün und in die Lücke eingesetzt.
-7. Falsche Auswahl wird kurz rot.
-8. Mit „Neu versuchen“ kann die aktuelle Runde zurückgesetzt werden.
+- keine kleinen Punkte mehr zwischen den Zahlen
+- jede Position ist eine klare Karte
+- vollständige Reihe wird zuerst 7 Sekunden gezeigt
+- danach startet das Puzzle
+- Stufe 1: 6 Zahlen fehlen
+- Stufe 2: 8 Zahlen fehlen
+- Stufe 3: alle 10 Zahlen fehlen
+- alle fehlenden Zahlen liegen unten als gemischte Kacheln
+- Kind tippt von links nach rechts
+- richtige Zahl wird direkt in die nächste Lücke eingesetzt
+- falsche Zahl wackelt kurz und bleibt unten
+- nach vollständiger Reihe Erfolgsmeldung und kleine Belohnungsanimation
+- „Neu versuchen“ setzt die aktuelle Runde zurück
 
-Es gibt keine Texteingabe, keine Kommas und keinen Prüfen-Button mehr.
-
-Version: V12.8 / ?v=128
+Version: V12.9 / ?v=129

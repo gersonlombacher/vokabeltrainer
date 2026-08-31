@@ -269,18 +269,17 @@
       </div>
       
       
+      
       <div id="sequence-practice-box" class="practice-box hidden">
-        <div class="gap-title">🧩 Welche Zahlen fehlen?</div>
-        <div id="practice-line" class="practice-line"></div>
+        <div class="puzzle-heading">🧩 Reihen-Puzzle</div>
+        <div class="puzzle-subtitle">Setze die fehlenden Zahlen von links nach rechts ein.</div>
 
-        <div class="gap-instruction">
-          Tippe die fehlenden Zahlen <b>von links nach rechts</b> an.
-        </div>
+        <div id="practice-line" class="puzzle-line" aria-live="polite"></div>
 
-        <div id="practice-selected" class="practice-selected-row"></div>
+        <div class="puzzle-choice-label">Fehlende Zahlen</div>
         <div id="practice-choices" class="practice-choice-grid"></div>
 
-        <button id="practice-reset" class="btn secondary gap-reset" type="button">
+        <button id="practice-reset" class="btn secondary puzzle-reset" type="button">
           ↩️ Neu versuchen
         </button>
       </div>
@@ -473,14 +472,37 @@
 })();
 </script>
 
-<script src="js/storage.js?v=128"></script>
-<script src="js/app.js?v=128"></script>
-<script src="js/english.js?v=128"></script>
-<script src="js/math.js?v=128"></script>
-<script src="js/math-ui.js?v=128"></script>
-<script src="js/rewards.js?v=128"></script>
-<script src="js/memorize.js?v=128"></script>
-<script src="js/sequence.js?v=128"></script>
-<div id="build-version" class="build-version">V12.8</div>
+
+<script>
+(async function(){
+  const key="vocaflow_hard_reset_129";
+  if(sessionStorage.getItem(key)) return;
+  sessionStorage.setItem(key,"1");
+  try{
+    if("serviceWorker" in navigator){
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r=>r.unregister()));
+    }
+    if("caches" in window){
+      const keys=await caches.keys();
+      await Promise.all(keys.map(k=>caches.delete(k)));
+    }
+  }catch(e){}
+  const u=new URL(location.href);
+  u.searchParams.set("v","129");
+  u.searchParams.set("fresh","1");
+  location.replace(u.toString());
+})();
+</script>
+
+<script src="js/storage.js?v=129"></script>
+<script src="js/app.js?v=129"></script>
+<script src="js/english.js?v=129"></script>
+<script src="js/math.js?v=129"></script>
+<script src="js/math-ui.js?v=129"></script>
+<script src="js/rewards.js?v=129"></script>
+<script src="js/memorize.js?v=129"></script>
+<script src="js/sequence.js?v=129"></script>
+<div id="build-version" class="build-version">V12.9</div>
 </body>
 </html>

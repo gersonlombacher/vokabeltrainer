@@ -597,3 +597,110 @@ button.feature.purple{background:linear-gradient(145deg,#fff,#f0e9ff)!important;
   .practice-choice-grid{grid-template-columns:repeat(2,1fr)}
   .practice-choice{font-size:22px}
 }
+
+/* V12.9 Reihen-Puzzle */
+.puzzle-heading{
+  font-size:26px;
+  font-weight:900;
+  text-align:center;
+  margin-bottom:4px;
+}
+.puzzle-subtitle{
+  text-align:center;
+  color:var(--muted);
+  margin-bottom:18px;
+}
+.puzzle-line{
+  display:grid;
+  grid-template-columns:repeat(10,minmax(56px,1fr));
+  gap:10px;
+  align-items:center;
+  margin:16px 0 20px;
+}
+.puzzle-number-card{
+  min-height:70px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  font-size:26px;
+  font-weight:900;
+  border:1px solid var(--border);
+  background:#fff;
+  box-shadow:0 6px 16px rgba(36,55,90,.06);
+}
+.puzzle-number-card.given{
+  background:linear-gradient(145deg,#fff,#eef3fb);
+  color:#324058;
+}
+.puzzle-number-card.missing{
+  border:2px dashed #bba5f5;
+  background:#f8f5ff;
+  color:#7654d7;
+}
+.puzzle-number-card.filled{
+  border-style:solid;
+  border-color:#9ecfaf;
+  background:#eaf8ef;
+  color:#1d7540;
+}
+.puzzle-choice-label{
+  text-align:center;
+  color:var(--muted);
+  font-weight:900;
+  margin-bottom:10px;
+}
+.practice-choice-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:12px;
+  max-width:760px;
+  margin:0 auto 14px;
+}
+.practice-choice{
+  min-height:68px;
+  border:1px solid #cdbdf5;
+  border-radius:18px;
+  background:linear-gradient(145deg,#fff,#f0e9ff);
+  color:#4f32a8;
+  font-size:25px;
+  font-weight:900;
+  box-shadow:var(--shadow);
+  -webkit-appearance:none;
+  appearance:none;
+}
+.practice-choice.used{opacity:.35}
+.practice-choice.correct{
+  background:#eaf8ef!important;
+  border-color:#8fd0a5!important;
+  color:#18733b!important;
+}
+.practice-choice.wrong{
+  background:#fff0ee!important;
+  border-color:#e8a59a!important;
+  color:#9b3025!important;
+}
+.fly-choice{animation:choicePop .35s ease}
+.shake-choice{animation:choiceShake .35s ease}
+@keyframes choicePop{
+  0%{transform:scale(1)}
+  45%{transform:scale(1.12)}
+  100%{transform:scale(1)}
+}
+@keyframes choiceShake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  50%{transform:translateX(6px)}
+  75%{transform:translateX(-4px)}
+}
+.puzzle-reset{
+  display:block;
+  margin:6px auto 0;
+}
+@media(max-width:900px){
+  .puzzle-line{grid-template-columns:repeat(5,1fr)}
+}
+@media(max-width:650px){
+  .puzzle-line{grid-template-columns:repeat(2,1fr)}
+  .practice-choice-grid{grid-template-columns:repeat(2,1fr)}
+  .practice-choice{font-size:22px}
+}

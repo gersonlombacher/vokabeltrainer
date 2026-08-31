@@ -5,13 +5,15 @@ let selectedVoice=null;
 let previewTimeout=null;
 let countdownInterval=null;
 
-let gapValues=[];
-let gapIndexes=[];
-let gapMissingValues=[];
-let gapUserValues=[];
-let gapRound=0;
+let puzzleValues=[];
+let puzzleMissingIndexes=[];
+let puzzleMissingValues=[];
+let puzzlePlacedCount=0;
+let puzzleLevel=1;
 
-function seqVals(n){ return Array.from({length:10},(_,i)=>n*(i+1)); }
+function seqVals(n){
+  return Array.from({length:10},(_,i)=>n*(i+1));
+}
 
 function pickNaturalGermanVoice(){
   if(!("speechSynthesis" in window)) return null;
@@ -21,7 +23,7 @@ function pickNaturalGermanVoice(){
       || voices.find(v=>/^de(-|_)/i.test(v.lang||""))
       || null;
 }
-function refreshVoice(){selectedVoice=pickNaturalGermanVoice();}
+function refreshVoice(){ selectedVoice=pickNaturalGermanVoice(); }
 if("speechSynthesis" in window){
   refreshVoice();
   speechSynthesis.onvoiceschanged=refreshVoice;
@@ -33,26 +35,31 @@ function clearPreview(){
   previewTimeout=null;
   countdownInterval=null;
 }
+
 function showReferences(){
   document.querySelector("#sequence-steps")?.classList.remove("hidden");
   document.querySelector("#sequence-numberline")?.classList.remove("hidden");
   document.querySelector("#sequence-preview-note")?.classList.remove("hidden");
 }
+
 function hideReferences(){
   document.querySelector("#sequence-steps")?.classList.add("hidden");
   document.querySelector("#sequence-numberline")?.classList.add("hidden");
   document.querySelector("#sequence-preview-note")?.classList.add("hidden");
 }
+
 function previewThenHide(seconds=7,after=null){
   clearPreview();
   showReferences();
-  const note=document.querySelector("#sequence-preview-note");
   let remaining=seconds;
+  const note=document.querySelector("#sequence-preview-note");
   if(note) note.textContent=`👀 Noch ${remaining} Sekunden anschauen …`;
 
   countdownInterval=setInterval(()=>{
     remaining--;
-    if(remaining>0 && note) note.textContent=`👀 Noch ${remaining} Sekunden anschauen …`;
+    if(remaining>0 && note){
+      note.textContent=`👀 Noch ${remaining} Sekunden anschauen …`;
+    }
   },1000);
 
   previewTimeout=setTimeout(()=>{
@@ -67,9 +74,12 @@ function startSequence(){
   showView("sequence");
   renderSequence();
 }
+
 function renderSequence(){
   clearPreview();
+  puzzleLevel=1;
   const vals=seqVals(sequenceN);
+
   document.querySelector("#sequence-title").textContent=`${sequenceN}er-Reihe`;
 
   const steps=document.querySelector("#sequence-steps");
@@ -96,12 +106,13 @@ function renderSequence(){
   document.querySelector("#sequence-practice-box")?.classList.add("hidden");
   document.querySelector("#sequence-feedback").textContent="";
   showReferences();
+
   const note=document.querySelector("#sequence-preview-note");
   if(note) note.textContent="👀 Schau dir die Reihe an.";
 }
 
 function speakOne(text,onend){
-  if(!("speechSynthesis" in window)){onend?.();return;}
+  if(!("speechSynthesis" in window)){ onend?.(); return; }
   const u=new SpeechSynthesisUtterance(String(text));
   u.lang="de-DE";
   u.rate=.78;
@@ -110,15 +121,18 @@ function speakOne(text,onend){
   u.onend=()=>onend?.();
   speechSynthesis.speak(u);
 }
+
 function speakSequence(){
   const vals=seqVals(sequenceN);
   if(!("speechSynthesis" in window)){
     document.querySelector("#sequence-feedback").textContent="Sprachausgabe wird auf diesem Gerät nicht unterstützt.";
     return;
   }
+
   speechSynthesis.cancel();
   showReferences();
   let i=0;
+
   const next=()=>{
     if(i>=vals.length){
       previewThenHide(7);
@@ -126,7 +140,7 @@ function speakSequence(){
     }
     document.querySelectorAll(".sequence-step").forEach(x=>x.classList.remove("active"));
     document.querySelector(`.sequence-step[data-i="${i}"]`)?.classList.add("active");
-    speakOne(vals[i],()=>{i++;setTimeout(next,150);});
+    speakOne(vals[i],()=>{ i++; setTimeout(next,150); });
   };
   next();
 }
@@ -136,12 +150,14 @@ function parseGermanNumbers(text){
     .replace(/\bsex\b/g,"sechs")
     .replace(/\bsix\b/g,"sechs")
     .replace(/[.,;:!?]/g," ");
+
   const simple={
     null:0,eins:1,ein:1,eine:1,zwei:2,drei:3,vier:4,"fünf":5,funf:5,sechs:6,sieben:7,acht:8,neun:9,
     zehn:10,elf:11,"zwölf":12,zwoelf:12,dreizehn:13,vierzehn:14,"fünfzehn":15,funfzehn:15,sechzehn:16,siebzehn:17,
     achtzehn:18,neunzehn:19,zwanzig:20,"dreißig":30,dreissig:30,vierzig:40,"fünfzig":50,funfzig:50,sechzig:60,
     siebzig:70,achtzig:80,neunzig:90
   };
+
   const out=[];
   for(const w of normalized.split(/\s+/).filter(Boolean)){
     if(/^\d+$/.test(w)) out.push(Number(w));
@@ -149,23 +165,27 @@ function parseGermanNumbers(text){
   }
   return out;
 }
+
 function beginRecognition(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){
     document.querySelector("#speech-status-text").textContent="Spracherkennung ist in diesem Browser nicht verfügbar.";
     return;
   }
-  if(sequenceRecognition){try{sequenceRecognition.stop()}catch{}}
+
+  if(sequenceRecognition){ try{sequenceRecognition.stop()}catch{} }
   sequenceRecognition=new SR();
   sequenceRecognition.lang="de-DE";
   sequenceRecognition.continuous=false;
   sequenceRecognition.interimResults=true;
+
   let finalText="";
 
   sequenceRecognition.onstart=()=>{
     document.querySelector("#speech-status-text").textContent=`Jetzt die ${sequenceN}er-Reihe ohne Ablesen aufsagen.`;
     document.querySelector("#speech-live").textContent="Ich höre zu …";
   };
+
   sequenceRecognition.onresult=e=>{
     let interim="";
     for(let i=e.resultIndex;i<e.results.length;i++){
@@ -174,111 +194,160 @@ function beginRecognition(){
       else interim+=t;
     }
     const nums=parseGermanNumbers((finalText+" "+interim).trim());
-    document.querySelector("#speech-live").textContent=nums.length?nums.join(" · "):"Ich höre zu …";
+    document.querySelector("#speech-live").textContent=nums.length ? nums.join(" · ") : "Ich höre zu …";
   };
+
   sequenceRecognition.onend=()=>{
     const nums=parseGermanNumbers(finalText);
-    const exp=seqVals(sequenceN);
-    const ok=nums.length>=10 && exp.every((v,i)=>nums[i]===v);
+    const expected=seqVals(sequenceN);
+    const ok=nums.length>=10 && expected.every((v,i)=>nums[i]===v);
     document.querySelector("#sequence-feedback").textContent=
       ok ? "🎉 Super! Die Reihe war richtig." : "Fast. Versuch die Reihe noch einmal.";
   };
-  try{sequenceRecognition.start()}catch{}
+
+  try{ sequenceRecognition.start(); }catch{}
 }
+
 function startSpeechRecognition(){
   document.querySelector("#sequence-speech-box").classList.remove("hidden");
   document.querySelector("#speech-status-text").textContent="Schau dir die Reihe noch kurz an.";
   previewThenHide(7,beginRecognition);
 }
+
 function stopSpeech(){
-  if(sequenceRecognition){try{sequenceRecognition.stop()}catch{}}
+  if(sequenceRecognition){ try{sequenceRecognition.stop()}catch{} }
   sequenceRecognition=null;
 }
 
-/* ---------- LÜCKEN: KACHELN IN RICHTIGER REIHENFOLGE ---------- */
+/* ---------------- REIHEN-PUZZLE ---------------- */
+
 function shuffled(arr){
-  return arr.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v);
+  return arr
+    .map(v=>({v,r:Math.random()}))
+    .sort((a,b)=>a.r-b.r)
+    .map(x=>x.v);
 }
 
-function createGapIndexes(){
-  // 4 echte Lücken; nicht ganz am Anfang oder Ende.
-  const candidates=[1,2,3,4,5,6,7,8];
-  return shuffled(candidates).slice(0,4).sort((a,b)=>a-b);
+function missingCountForLevel(){
+  if(puzzleLevel===1) return 6;  // einige Anker bleiben
+  if(puzzleLevel===2) return 8;  // nur zwei Anker
+  return 10;                     // komplette Reihe selbst aufbauen
 }
 
-function buildGapRound(){
-  gapValues=seqVals(sequenceN);
-  gapIndexes=createGapIndexes();
-  gapMissingValues=gapIndexes.map(i=>gapValues[i]);
-  gapUserValues=[];
+function pickMissingIndexes(count){
+  const all=[0,1,2,3,4,5,6,7,8,9];
 
+  if(count===6){
+    // gute Anker bleiben sichtbar: Positionen 1,4,7,10
+    return [1,2,4,5,7,8];
+  }
+
+  if(count===8){
+    // nur Anfang und Ende bleiben stehen
+    return [1,2,3,4,5,6,7,8];
+  }
+
+  return all;
+}
+
+function buildPuzzle(){
+  puzzleValues=seqVals(sequenceN);
+  puzzlePlacedCount=0;
+
+  const count=missingCountForLevel();
+  puzzleMissingIndexes=pickMissingIndexes(count);
+  puzzleMissingValues=puzzleMissingIndexes.map(i=>puzzleValues[i]);
+
+  renderPuzzleLine();
+  renderPuzzleChoices();
+
+  document.querySelector("#sequence-feedback").textContent=
+    puzzleLevel===1 ? "Setze alle fehlenden Zahlen ein." :
+    puzzleLevel===2 ? "Jetzt fehlen noch mehr Zahlen." :
+    "Profi! Baue die ganze Reihe selbst auf.";
+}
+
+function renderPuzzleLine(){
   const line=document.querySelector("#practice-line");
-  line.innerHTML=gapValues.map((v,i)=>{
-    if(gapIndexes.includes(i)){
-      const order=gapIndexes.indexOf(i);
-      return `<span class="gap-slot" data-gap-order="${order}">?</span>`;
+  line.innerHTML="";
+
+  puzzleValues.forEach((value,index)=>{
+    const slot=document.createElement("div");
+    slot.className="puzzle-number-card";
+
+    const missingOrder=puzzleMissingIndexes.indexOf(index);
+
+    if(missingOrder===-1){
+      slot.classList.add("given");
+      slot.textContent=value;
+    }else{
+      slot.classList.add("missing");
+      slot.dataset.missingOrder=missingOrder;
+
+      if(missingOrder<puzzlePlacedCount){
+        slot.textContent=puzzleMissingValues[missingOrder];
+        slot.classList.add("filled");
+      }else{
+        slot.textContent="?";
+      }
     }
-    return `<span class="gap-known">${v}</span>`;
-  }).join('<span class="sequence-sep"> · </span>');
 
-  renderSelectedGaps();
-  renderGapChoices();
-  document.querySelector("#sequence-feedback").textContent="Tippe die fehlenden Zahlen von links nach rechts an.";
-}
-
-function renderSelectedGaps(){
-  const box=document.querySelector("#practice-selected");
-  if(!box)return;
-  box.innerHTML="";
-  gapMissingValues.forEach((_,i)=>{
-    const chip=document.createElement("div");
-    chip.className="selected-gap-chip";
-    chip.textContent=gapUserValues[i] ?? (i+1);
-    if(gapUserValues[i]!==undefined) chip.classList.add("filled");
-    box.appendChild(chip);
-  });
-
-  document.querySelectorAll("[data-gap-order]").forEach(el=>{
-    const order=Number(el.dataset.gapOrder);
-    el.textContent=gapUserValues[order] ?? "?";
-    el.classList.toggle("filled",gapUserValues[order]!==undefined);
+    line.appendChild(slot);
   });
 }
 
-function renderGapChoices(){
+function renderPuzzleChoices(){
   const box=document.querySelector("#practice-choices");
   box.innerHTML="";
-  shuffled(gapMissingValues).forEach(value=>{
+
+  shuffled(puzzleMissingValues).forEach(value=>{
     const btn=document.createElement("button");
     btn.type="button";
     btn.className="practice-choice";
     btn.textContent=value;
 
-    btn.addEventListener("click",()=>{
-      if(btn.disabled) return;
+    const alreadyPlaced=puzzleMissingValues
+      .slice(0,puzzlePlacedCount)
+      .includes(value);
 
-      const expectedIndex=gapUserValues.length;
-      const expected=gapMissingValues[expectedIndex];
+    if(alreadyPlaced){
+      btn.disabled=true;
+      btn.classList.add("used");
+    }
+
+    btn.addEventListener("click",()=>{
+      const expected=puzzleMissingValues[puzzlePlacedCount];
 
       if(value===expected){
-        gapUserValues.push(value);
+        btn.classList.add("correct","fly-choice");
         btn.disabled=true;
-        btn.classList.add("used","correct");
-        renderSelectedGaps();
 
-        if(gapUserValues.length===gapMissingValues.length){
-          document.querySelector("#sequence-feedback").textContent="🎉 Super! Alle Lücken richtig.";
-          gapRound++;
+        puzzlePlacedCount++;
+        renderPuzzleLine();
+
+        if(puzzlePlacedCount===puzzleMissingValues.length){
+          document.querySelector("#sequence-feedback").textContent="🎉 Super! Reihe geschafft!";
+          burst(profile()?.theme==="cats"?"🐾":"⭐");
+
           setTimeout(()=>{
-            buildGapRound();
-          },900);
+            if(puzzleLevel<3){
+              puzzleLevel++;
+              buildPuzzle();
+            }else{
+              puzzleLevel=1;
+              buildPuzzle();
+            }
+          },1100);
         }else{
-          document.querySelector("#sequence-feedback").textContent="✅ Richtig. Jetzt die nächste Lücke.";
+          document.querySelector("#sequence-feedback").textContent="✅ Richtig. Weiter geht’s.";
+          renderPuzzleChoices();
         }
       }else{
-        btn.classList.add("wrong");
-        document.querySelector("#sequence-feedback").textContent="Noch nicht – welche Zahl gehört als Nächstes?";
-        setTimeout(()=>btn.classList.remove("wrong"),500);
+        btn.classList.add("wrong","shake-choice");
+        document.querySelector("#sequence-feedback").textContent="Noch nicht. Welche Zahl kommt als Nächstes?";
+        setTimeout(()=>{
+          btn.classList.remove("wrong","shake-choice");
+        },500);
       }
     });
 
@@ -286,27 +355,27 @@ function renderGapChoices(){
   });
 }
 
-function resetGapRound(){
-  gapUserValues=[];
-  renderSelectedGaps();
-  renderGapChoices();
+function resetPuzzle(){
+  puzzlePlacedCount=0;
+  renderPuzzleLine();
+  renderPuzzleChoices();
   document.querySelector("#sequence-feedback").textContent="Nochmal von links nach rechts.";
 }
 
 function openPractice(){
   stopSpeech();
-  gapRound=0;
+  puzzleLevel=1;
+
   document.querySelector("#sequence-practice-box").classList.remove("hidden");
+  document.querySelector("#practice-choices").innerHTML="";
+  document.querySelector("#sequence-feedback").textContent="Schau dir die ganze Reihe 7 Sekunden an.";
 
   const vals=seqVals(sequenceN);
-  document.querySelector("#practice-line").innerHTML=
-    vals.map(v=>`<span class="gap-known">${v}</span>`).join('<span class="sequence-sep"> · </span>');
-  document.querySelector("#practice-selected").innerHTML="";
-  document.querySelector("#practice-choices").innerHTML="";
-  document.querySelector("#sequence-feedback").textContent="Schau dir die Reihe 7 Sekunden an.";
+  const line=document.querySelector("#practice-line");
+  line.innerHTML=vals.map(v=>`<div class="puzzle-number-card given">${v}</div>`).join("");
 
   previewThenHide(7,()=>{
-    buildGapRound();
+    buildPuzzle();
   });
 }
 
@@ -316,4 +385,4 @@ document.querySelector("#sequence-practice").addEventListener("click",openPracti
 document.querySelector("#sequence-speak").addEventListener("click",startSpeechRecognition);
 document.querySelector("#speech-stop").addEventListener("click",stopSpeech);
 document.querySelector("#speech-retry").addEventListener("click",startSpeechRecognition);
-document.querySelector("#practice-reset")?.addEventListener("click",resetGapRound);
+document.querySelector("#practice-reset")?.addEventListener("click",resetPuzzle);
