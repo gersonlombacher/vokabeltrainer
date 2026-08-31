@@ -90,6 +90,15 @@
       <button class="mode" data-mode="boss">👑<b>Bosskampf</b><small>Eine Reihe meistern</small></button>
     </section>
 
+    <section class="card help-mode-card">
+      <div class="section-head"><h3>Lernhilfe</h3><span class="eyebrow">anpassbar</span></div>
+      <div class="help-mode-options">
+        <button class="help-mode selected" data-help-mode="full">🟢 Anfänger<br><small>Hilfe immer sichtbar</small></button>
+        <button class="help-mode" data-help-mode="short">🟡 Üben<br><small>nur Strategie</small></button>
+        <button class="help-mode" data-help-mode="hidden">🔴 Können<br><small>Hilfe nur auf Klick</small></button>
+      </div>
+    </section>
+
     <section class="card tables-card">
       <div class="section-head"><h3>Reihen auswählen</h3><button id="all-tables" class="link">Alle</button></div>
       <div id="table-buttons" class="table-grid"></div>
@@ -110,7 +119,16 @@
         </div>
         <div id="math-feedback" class="feedback"></div>
       </section>
-      <aside class="hint card"><div id="math-tip-icon" class="hint-icon">🕷️</div><h3>Lerntipp</h3><p id="math-tip"></p></aside>
+      <aside class="hint card math-help-card">
+          <div id="math-tip-icon" class="hint-icon">🧠</div>
+          <span class="eyebrow">Lernhilfe</span>
+          <h3 id="math-help-title">Verstehen</h3>
+          <p id="math-tip"></p>
+          <div id="math-help-short" class="math-help-short"></div>
+          <div id="math-help-full" class="math-help-full"></div>
+          <div id="math-memory" class="math-memory"></div>
+          <button id="math-help-toggle" class="btn secondary">Weniger Hilfe</button>
+        </aside>
     </div>
   </main>
 
