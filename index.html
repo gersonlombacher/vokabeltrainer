@@ -90,7 +90,30 @@
       <button class="mode" data-mode="boss">👑<b>Bosskampf</b><small>Eine Reihe meistern</small></button>
     </section>
 
-    <section class="card help-mode-card">
+    
+    <section class="card memorize-card">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Neu</span>
+          <h3>⚡ 1×1 auswendig lernen</h3>
+        </div>
+        <span class="memorize-badge">spielerisch</span>
+      </div>
+      <p class="memorize-intro">Wenn eine Aufgabe einfach sitzen muss: kurze, schnelle Wiederholungen ohne lange Erklärungen.</p>
+      <div class="memorize-mode-grid">
+        <button class="memorize-mode" data-memorize="flash">
+          <span>🃏</span><b>Blitzkarten</b><small>Aufgabe ansehen, Lösung aufdecken</small>
+        </button>
+        <button class="memorize-mode" data-memorize="wheel">
+          <span>🎡</span><b>Glücksrad</b><small>Rad drehen und Aufgabe lösen</small>
+        </button>
+        <button class="memorize-mode" data-memorize="rhythm">
+          <span>🎵</span><b>Rhythmus</b><small>Aufgabe und Lösung mehrfach sprechen</small>
+        </button>
+      </div>
+    </section>
+
+<section class="card help-mode-card">
       <div class="section-head"><h3>Lernhilfe</h3><span class="eyebrow">anpassbar</span></div>
       <div class="help-mode-options">
         <button class="help-mode selected" data-help-mode="full">🟢 Anfänger<br><small>Hilfe immer sichtbar</small></button>
@@ -132,7 +155,63 @@
     </div>
   </main>
 
-  <main id="progress-view" class="view hidden">
+  
+  <main id="memorize-view" class="view hidden">
+    <div class="page-head">
+      <button class="back" data-back="math">←</button>
+      <div><span class="eyebrow">1×1 auswendig lernen</span><h2 id="memorize-title">Blitzkarten</h2></div>
+    </div>
+
+    <section class="memorize-play card">
+      <div class="memorize-top">
+        <span id="memorize-counter">1 / 20</span>
+        <span id="memorize-score">0 sicher</span>
+      </div>
+
+      <div id="wheel-wrap" class="wheel-wrap hidden">
+        <div id="wheel" class="wheel">
+          <div class="wheel-center">🎡</div>
+        </div>
+        <button id="spin-wheel" class="btn primary">Rad drehen</button>
+      </div>
+
+      <div id="flash-wrap" class="flash-wrap">
+        <button id="flash-card" class="flash-card" type="button" aria-label="Karte umdrehen">
+          <div class="flash-inner">
+            <div class="flash-front">
+              <span class="eyebrow">AUFGABE</span>
+              <div id="flash-question" class="flash-question">7 × 8</div>
+              <small>Tippen zum Aufdecken</small>
+            </div>
+            <div class="flash-back">
+              <span class="eyebrow">LÖSUNG</span>
+              <div id="flash-answer" class="flash-answer">56</div>
+              <small id="flash-memory">Sprich die Aufgabe laut.</small>
+            </div>
+          </div>
+        </button>
+
+        <div class="memorize-actions">
+          <button id="memorize-again" class="btn secondary">🔁 Noch einmal</button>
+          <button id="memorize-knew" class="btn primary">✅ Gewusst</button>
+        </div>
+      </div>
+
+      <div id="rhythm-wrap" class="rhythm-wrap hidden">
+        <div class="rhythm-icon">🎵</div>
+        <div id="rhythm-line" class="rhythm-line">7 mal 8 ist 56</div>
+        <div class="rhythm-dots"><i></i><i></i><i></i><i></i></div>
+        <div class="memorize-actions">
+          <button id="rhythm-speak" class="btn secondary">🔊 Noch einmal sprechen</button>
+          <button id="rhythm-next" class="btn primary">Weiter</button>
+        </div>
+      </div>
+
+      <div id="memorize-feedback" class="feedback"></div>
+    </section>
+  </main>
+
+<main id="progress-view" class="view hidden">
     <div class="page-head"><button class="back">←</button><div><span class="eyebrow">Übersicht</span><h2>Fortschritt</h2></div></div>
     <div class="stats-row">
       <div class="stat card"><span>⭐ XP</span><strong id="p-xp">0</strong></div>
@@ -182,5 +261,6 @@
 <script src="js/english.js"></script>
 <script src="js/math.js"></script>
 <script src="js/rewards.js"></script>
+<script src="js/memorize.js"></script>
 </body>
 </html>
