@@ -6,11 +6,7 @@
 <meta name="theme-color" content="#7243e8">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="css/style.css?v=120>
-<title>VocaFlow V11.2</title>
-</head>
-<body>
-<div id="app">
+<link rel="stylesheet" href="css/style.css?v=1211"app">
 
 <section id="profile-screen" class="screen">
   <div class="hero">
@@ -64,14 +60,22 @@
         <div class="learn-meta"><span id="eng-counter"></span><span>Deutsch → Englisch</span></div>
         <div id="eng-de" class="big-word">–</div>
         <input id="eng-answer" class="answer" placeholder="Englische Übersetzung" autocomplete="off" autocapitalize="off" spellcheck="false">
-        <div class="actions">
-          <button id="eng-hint" class="btn secondary">💡 Hinweis</button>
+        <div class="english-help-row">
+          <button id="eng-speak" class="btn secondary" type="button">🔊 Wort anhören</button>
+          <button id="eng-hint" class="btn secondary" type="button">💡 Hinweis 1</button>
+        </div>
+        <div class="actions two">
           <button id="eng-dontknow" class="btn secondary">🤷 Weiß ich nicht</button>
           <button id="eng-check" class="btn primary">Prüfen</button>
         </div>
         <div id="eng-feedback" class="feedback"></div>
       </section>
-      <aside class="hint card"><div class="hint-icon">🧠</div><h3>Merkhilfe</h3><p id="eng-hint-text">Nur bei Bedarf öffnen.</p></aside>
+      <aside class="hint card english-hint-card">
+      <div class="hint-icon">🧠</div>
+      <h3>Merkhilfe</h3>
+      <div id="eng-hint-level" class="hint-level">0 von 3 Hinweisen</div>
+      <p id="eng-hint-text">Wenn du Hilfe brauchst, tippe auf „Hinweis 1“.</p>
+    </aside>
     </div>
   </main>
 
@@ -495,14 +499,60 @@
 })();
 </script>
 
-<script src="js/storage.js?v=129"></script>
-<script src="js/app.js?v=129"></script>
-<script src="js/english.js?v=129"></script>
-<script src="js/math.js?v=129"></script>
-<script src="js/math-ui.js?v=129"></script>
-<script src="js/rewards.js?v=129"></script>
-<script src="js/memorize.js?v=129"></script>
-<script src="js/sequence.js?v=129"></script>
-<div id="build-version" class="build-version">V12.9</div>
+
+<script>
+(async function(){
+  const key="vocaflow_hard_reset_1210";
+  if(sessionStorage.getItem(key)) return;
+  sessionStorage.setItem(key,"1");
+  try{
+    if("serviceWorker" in navigator){
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r=>r.unregister()));
+    }
+    if("caches" in window){
+      const keys=await caches.keys();
+      await Promise.all(keys.map(k=>caches.delete(k)));
+    }
+  }catch(e){}
+  const u=new URL(location.href);
+  u.searchParams.set("v","1210");
+  u.searchParams.set("fresh","1");
+  location.replace(u.toString());
+})();
+</script>
+
+
+<script>
+(async function(){
+  const key="vocaflow_hard_reset_1211";
+  if(sessionStorage.getItem(key)) return;
+  sessionStorage.setItem(key,"1");
+  try{
+    if("serviceWorker" in navigator){
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r=>r.unregister()));
+    }
+    if("caches" in window){
+      const keys=await caches.keys();
+      await Promise.all(keys.map(k=>caches.delete(k)));
+    }
+  }catch(e){}
+  const u=new URL(location.href);
+  u.searchParams.set("v","1211");
+  u.searchParams.set("fresh","1");
+  location.replace(u.toString());
+})();
+</script>
+
+<script src="js/storage.js?v=1211"></script>
+<script src="js/app.js?v=1211"></script>
+<script src="js/english.js?v=1211"></script>
+<script src="js/math.js?v=1211"></script>
+<script src="js/math-ui.js?v=1211"></script>
+<script src="js/rewards.js?v=1211"></script>
+<script src="js/memorize.js?v=1211"></script>
+<script src="js/sequence.js?v=1211"></script>
+<div id="build-version" class="build-version">V12.11</div>
 </body>
 </html>

@@ -1,19 +1,20 @@
-# VocaFlow V12.9 – Reihen-Puzzle
+# VocaFlow V12.11 – Englisch: Aussprache, mehr Hinweise, einfachere Antworten
 
-Letzte Änderung für heute:
+Neu:
+- „Wort anhören“: das englische Zielwort kann vorgelesen werden.
+- Die App bevorzugt eine natürlichere englische Frauenstimme, sofern das Gerät eine anbietet.
+- 3 Hilfestufen pro Vokabel:
+  1. Merkhilfe / erster Buchstabe
+  2. Anzahl Buchstaben + letzter Buchstabe
+  3. Buchstabenmuster
+- Hinweise werden nacheinander geöffnet; nicht alles wird sofort verraten.
 
-- keine kleinen Punkte mehr zwischen den Zahlen
-- jede Position ist eine klare Karte
-- vollständige Reihe wird zuerst 7 Sekunden gezeigt
-- danach startet das Puzzle
-- Stufe 1: 6 Zahlen fehlen
-- Stufe 2: 8 Zahlen fehlen
-- Stufe 3: alle 10 Zahlen fehlen
-- alle fehlenden Zahlen liegen unten als gemischte Kacheln
-- Kind tippt von links nach rechts
-- richtige Zahl wird direkt in die nächste Lücke eingesetzt
-- falsche Zahl wackelt kurz und bleibt unten
-- nach vollständiger Reihe Erfolgsmeldung und kleine Belohnungsanimation
-- „Neu versuchen“ setzt die aktuelle Runde zurück
+Vereinfacht:
+- Klammern werden dem Kind nicht mehr als Teil der Lösung angezeigt.
+- „(to)“ wird nicht mehr verlangt.
+- Beispiel: „(to) meet“ wird als „meet“ angezeigt.
+- „(to) listen (to)“ wird als „listen to“ angezeigt; „listen“ wird ebenfalls akzeptiert.
+- Erklärungen wie „I'm (= I am)“ werden klammerfrei dargestellt.
+- Bei „Weiß ich nicht“ und bei falscher Antwort wird nur die vereinfachte, klammerfreie Form angezeigt.
 
-Version: V12.9 / ?v=129
+Version: V12.11 / ?v=1211

@@ -145,11 +145,15 @@ function speakSequence(){
   next();
 }
 
+
 function parseGermanNumbers(text){
-  const normalized=String(text||"").toLowerCase()
+  const expected=seqVals(sequenceN);
+  let normalized=String(text||"").toLowerCase()
     .replace(/\bsex\b/g,"sechs")
     .replace(/\bsix\b/g,"sechs")
-    .replace(/[.,;:!?]/g," ");
+    .replace(/[.,;:!?]/g," ")
+    .replace(/\s+/g," ")
+    .trim();
 
   const simple={
     null:0,eins:1,ein:1,eine:1,zwei:2,drei:3,vier:4,"fünf":5,funf:5,sechs:6,sieben:7,acht:8,neun:9,
@@ -158,12 +162,51 @@ function parseGermanNumbers(text){
     siebzig:70,achtzig:80,neunzig:90
   };
 
-  const out=[];
-  for(const w of normalized.split(/\s+/).filter(Boolean)){
-    if(/^\d+$/.test(w)) out.push(Number(w));
-    else if(simple[w]!==undefined) out.push(simple[w]);
+  const rawTokens=[];
+  for(const token of normalized.split(/\s+/).filter(Boolean)){
+    if(/^\d+$/.test(token)){
+      rawTokens.push(token);
+    }else if(simple[token]!==undefined){
+      rawTokens.push(String(simple[token]));
+    }else{
+      rawTokens.push(token);
+    }
   }
-  return out;
+
+  const result=[];
+  let expectedIndex=0;
+
+  function consumeDigitChunk(chunk){
+    let rest=chunk;
+
+    while(rest && expectedIndex<expected.length){
+      const want=String(expected[expectedIndex]);
+      if(rest.startsWith(want)){
+        result.push(expected[expectedIndex]);
+        expectedIndex++;
+        rest=rest.slice(want.length);
+      }else{
+        break;
+      }
+    }
+
+    if(rest && expectedIndex<expected.length){
+      const asNumber=Number(rest);
+      if(asNumber===expected[expectedIndex]){
+        result.push(asNumber);
+        expectedIndex++;
+      }
+    }
+  }
+
+  for(const token of rawTokens){
+    if(expectedIndex>=expected.length) break;
+    if(/^\d+$/.test(token)){
+      consumeDigitChunk(token);
+    }
+  }
+
+  return result;
 }
 
 function beginRecognition(){
@@ -202,7 +245,9 @@ function beginRecognition(){
     const expected=seqVals(sequenceN);
     const ok=nums.length>=10 && expected.every((v,i)=>nums[i]===v);
     document.querySelector("#sequence-feedback").textContent=
-      ok ? "🎉 Super! Die Reihe war richtig." : "Fast. Versuch die Reihe noch einmal.";
+      ok
+      ? "🎉 Super! Die Reihe war richtig."
+      : `Ich habe ${nums.length} von 10 Zahlen sicher erkannt. Versuch es noch einmal – langsam und mit kleinen Pausen.`;
   };
 
   try{ sequenceRecognition.start(); }catch{}
