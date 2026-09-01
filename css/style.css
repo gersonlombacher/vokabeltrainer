@@ -737,3 +737,13 @@ button.feature.purple{background:linear-gradient(145deg,#fff,#f0e9ff)!important;
 @media(max-width:650px){
   .english-help-row{grid-template-columns:1fr}
 }
+
+.rewrite-note{
+  display:inline-block;
+  margin-top:8px;
+  color:#5d3eb8;
+  font-weight:900;
+}
+#eng-answer::placeholder{
+  color:#9aa4b2;
+}

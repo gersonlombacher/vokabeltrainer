@@ -1,5 +1,5 @@
 
-let WORDS=[],engSession=[],engPos=0,engHintLevel=0;
+let WORDS=[],engSession=[],engPos=0,engHintLevel=0,engCorrectionMode=false;
 let englishVoice=null;
 
 async function loadWords(){
@@ -206,11 +206,13 @@ function renderEnglish(){
   }
 
   engHintLevel=0;
+  engCorrectionMode=false;
 
   document.querySelector("#eng-title").textContent=`Klasse ${w.class} · ${w.unit}`;
   document.querySelector("#eng-counter").textContent=`${engPos+1} / ${engSession.length}`;
   document.querySelector("#eng-de").textContent=w.de;
   document.querySelector("#eng-answer").value="";
+  document.querySelector("#eng-answer").placeholder="Englische Übersetzung";
   document.querySelector("#eng-feedback").textContent="";
 
   document.querySelector("#eng-hint-level").textContent="0 von 3 Hinweisen";
@@ -227,10 +229,23 @@ document.querySelector("#eng-check").onclick=()=>{
   const w=engSession[engPos];
   if(!w)return;
 
-  const entered=norm(document.querySelector("#eng-answer").value);
+  const answer=document.querySelector("#eng-answer");
+  const entered=norm(answer.value);
   const ok=answerVariants(w.en).includes(entered);
 
   if(ok){
+    if(engCorrectionMode){
+      document.querySelector("#eng-feedback").innerHTML=
+        `✅ Jetzt ist es richtig: <b>${prettyEnglish(w.en)}</b>`;
+      engCorrectionMode=false;
+      answer.placeholder="Englische Übersetzung";
+      setTimeout(()=>{
+        engPos++;
+        renderEnglish();
+      },850);
+      return;
+    }
+
     document.querySelector("#eng-feedback").textContent="⭐ Richtig! +10 XP";
     const p=profile();
     p.xp+=10;
@@ -244,8 +259,15 @@ document.querySelector("#eng-check").onclick=()=>{
       renderEnglish();
     },500);
   }else{
+    engCorrectionMode=true;
+
     document.querySelector("#eng-feedback").innerHTML=
-      `Fast. Richtig wäre: <b>${prettyEnglish(w.en)}</b>`;
+      `Fast. Richtig wäre: <b>${prettyEnglish(w.en)}</b><br><span class="rewrite-note">✍️ Schreibe das Wort jetzt noch einmal richtig.</span>`;
+
+    // Falsches Wort verschwindet sofort, damit nicht einfach weitereditiert wird.
+    answer.value="";
+    answer.placeholder="Jetzt richtig schreiben";
+    answer.focus();
     shake(document.querySelector(".learn-card"));
   }
 };
@@ -256,10 +278,17 @@ document.querySelector("#eng-answer").onkeydown=e=>{
 
 document.querySelector("#eng-dontknow").onclick=()=>{
   const w=engSession[engPos];
-  if(w){
-    document.querySelector("#eng-feedback").innerHTML=
-      `Richtig ist: <b>${prettyEnglish(w.en)}</b>`;
-  }
+  if(!w)return;
+
+  engCorrectionMode=true;
+  const answer=document.querySelector("#eng-answer");
+
+  document.querySelector("#eng-feedback").innerHTML=
+    `Richtig ist: <b>${prettyEnglish(w.en)}</b><br><span class="rewrite-note">✍️ Schreibe das Wort jetzt einmal selbst richtig.</span>`;
+
+  answer.value="";
+  answer.placeholder="Jetzt richtig schreiben";
+  answer.focus();
 };
 
 document.querySelector("#eng-hint").onclick=showNextHint;

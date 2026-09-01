@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#7243e8">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="css/style.css?v=1211"app">
+<link rel="stylesheet" href="css/style.css?v=1212"app">
 
 <section id="profile-screen" class="screen">
   <div class="hero">
@@ -545,14 +545,37 @@
 })();
 </script>
 
-<script src="js/storage.js?v=1211"></script>
-<script src="js/app.js?v=1211"></script>
-<script src="js/english.js?v=1211"></script>
-<script src="js/math.js?v=1211"></script>
-<script src="js/math-ui.js?v=1211"></script>
-<script src="js/rewards.js?v=1211"></script>
-<script src="js/memorize.js?v=1211"></script>
-<script src="js/sequence.js?v=1211"></script>
-<div id="build-version" class="build-version">V12.11</div>
+
+<script>
+(async function(){
+  const key="vocaflow_hard_reset_1212";
+  if(sessionStorage.getItem(key)) return;
+  sessionStorage.setItem(key,"1");
+  try{
+    if("serviceWorker" in navigator){
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r=>r.unregister()));
+    }
+    if("caches" in window){
+      const keys=await caches.keys();
+      await Promise.all(keys.map(k=>caches.delete(k)));
+    }
+  }catch(e){}
+  const u=new URL(location.href);
+  u.searchParams.set("v","1212");
+  u.searchParams.set("fresh","1");
+  location.replace(u.toString());
+})();
+</script>
+
+<script src="js/storage.js?v=1212"></script>
+<script src="js/app.js?v=1212"></script>
+<script src="js/english.js?v=1212"></script>
+<script src="js/math.js?v=1212"></script>
+<script src="js/math-ui.js?v=1212"></script>
+<script src="js/rewards.js?v=1212"></script>
+<script src="js/memorize.js?v=1212"></script>
+<script src="js/sequence.js?v=1212"></script>
+<div id="build-version" class="build-version">V12.12</div>
 </body>
 </html>

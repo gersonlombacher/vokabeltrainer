@@ -1,20 +1,16 @@
-# VocaFlow V12.11 – Englisch: Aussprache, mehr Hinweise, einfachere Antworten
+# VocaFlow V12.12 – Englisch: richtig nachschreiben
 
 Neu:
-- „Wort anhören“: das englische Zielwort kann vorgelesen werden.
-- Die App bevorzugt eine natürlichere englische Frauenstimme, sofern das Gerät eine anbietet.
-- 3 Hilfestufen pro Vokabel:
-  1. Merkhilfe / erster Buchstabe
-  2. Anzahl Buchstaben + letzter Buchstabe
-  3. Buchstabenmuster
-- Hinweise werden nacheinander geöffnet; nicht alles wird sofort verraten.
+- Bei einer falschen Eingabe wird die richtige Lösung angezeigt.
+- Das falsch geschriebene Wort verschwindet sofort aus dem Eingabefeld.
+- Im selben Feld erscheint der Hinweis „Jetzt richtig schreiben“.
+- Das Kind muss das Wort korrekt noch einmal selbst eingeben.
+- Erst wenn die richtige Schreibweise eingegeben wurde, geht es zur nächsten Vokabel.
+- Auch bei „Weiß ich nicht“ muss die richtige Lösung anschließend einmal selbst geschrieben werden.
+- Die bisherigen Funktionen aus V12.11 bleiben erhalten:
+  - Wort anhören
+  - drei schrittweise Hinweise
+  - klammerfreie, vereinfachte Lösungen
+  - "(to)" muss nicht eingegeben werden
 
-Vereinfacht:
-- Klammern werden dem Kind nicht mehr als Teil der Lösung angezeigt.
-- „(to)“ wird nicht mehr verlangt.
-- Beispiel: „(to) meet“ wird als „meet“ angezeigt.
-- „(to) listen (to)“ wird als „listen to“ angezeigt; „listen“ wird ebenfalls akzeptiert.
-- Erklärungen wie „I'm (= I am)“ werden klammerfrei dargestellt.
-- Bei „Weiß ich nicht“ und bei falscher Antwort wird nur die vereinfachte, klammerfreie Form angezeigt.
-
-Version: V12.11 / ?v=1211
+Version: V12.12 / ?v=1212
