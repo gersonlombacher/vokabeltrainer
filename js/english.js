@@ -37,6 +37,16 @@ function startEnglish(c,u){
 
 /* ---------- Klammern und unnötiges "(to)" verschwinden ---------- */
 
+
+
+function escapeHtml(s){
+  return String(s||"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 function prettyEnglish(raw){
   let s=String(raw||"").trim();
 
@@ -261,10 +271,21 @@ document.querySelector("#eng-check").onclick=()=>{
   }else{
     engCorrectionMode=true;
 
-    document.querySelector("#eng-feedback").innerHTML=
-      `Fast. Richtig wäre: <b>${prettyEnglish(w.en)}</b><br><span class="rewrite-note">✍️ Schreibe das Wort jetzt noch einmal richtig.</span>`;
+    const wrongEntry=answer.value.trim();
 
-    // Falsches Wort verschwindet sofort, damit nicht einfach weitereditiert wird.
+    document.querySelector("#eng-feedback").innerHTML=
+      `<div class="correction-box">
+        <div class="correction-line wrong-line">
+          <span class="correction-label">❌ Du hast geschrieben:</span>
+          <b>${escapeHtml(wrongEntry || "—")}</b>
+        </div>
+        <div class="correction-line correct-line">
+          <span class="correction-label">✅ Richtig ist:</span>
+          <b>${prettyEnglish(w.en)}</b>
+        </div>
+        <div class="rewrite-note">✍️ Schreibe das Wort jetzt noch einmal richtig.</div>
+      </div>`;
+
     answer.value="";
     answer.placeholder="Jetzt richtig schreiben";
     answer.focus();
@@ -284,7 +305,13 @@ document.querySelector("#eng-dontknow").onclick=()=>{
   const answer=document.querySelector("#eng-answer");
 
   document.querySelector("#eng-feedback").innerHTML=
-    `Richtig ist: <b>${prettyEnglish(w.en)}</b><br><span class="rewrite-note">✍️ Schreibe das Wort jetzt einmal selbst richtig.</span>`;
+    `<div class="correction-box">
+      <div class="correction-line correct-line">
+        <span class="correction-label">✅ Richtig ist:</span>
+        <b>${prettyEnglish(w.en)}</b>
+      </div>
+      <div class="rewrite-note">✍️ Schreibe das Wort jetzt einmal selbst richtig.</div>
+    </div>`;
 
   answer.value="";
   answer.placeholder="Jetzt richtig schreiben";

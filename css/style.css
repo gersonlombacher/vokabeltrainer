@@ -747,3 +747,51 @@ button.feature.purple{background:linear-gradient(145deg,#fff,#f0e9ff)!important;
 #eng-answer::placeholder{
   color:#9aa4b2;
 }
+
+/* V12.13: Fehlervergleich beim Englischlernen */
+.correction-box{
+  margin-top:10px;
+  display:grid;
+  gap:10px;
+}
+.correction-line{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:#fff;
+}
+.correction-line b{
+  font-size:20px;
+}
+.correction-label{
+  font-weight:900;
+}
+.wrong-line{
+  background:#fff4f2;
+  border-color:#efb1a8;
+  color:#8d3026;
+}
+.correct-line{
+  background:#eefaf2;
+  border-color:#a8d7b7;
+  color:#236f40;
+}
+.rewrite-note{
+  display:block;
+  padding:10px 12px;
+  border-radius:12px;
+  background:#f4efff;
+  color:#5d3eb8;
+  font-weight:900;
+}
+@media(max-width:650px){
+  .correction-line{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:4px;
+  }
+}

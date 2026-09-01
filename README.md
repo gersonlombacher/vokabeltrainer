@@ -1,16 +1,23 @@
-# VocaFlow V12.12 – Englisch: richtig nachschreiben
+# VocaFlow V12.13 – Fehlervergleich beim Englischlernen
 
-Neu:
-- Bei einer falschen Eingabe wird die richtige Lösung angezeigt.
-- Das falsch geschriebene Wort verschwindet sofort aus dem Eingabefeld.
-- Im selben Feld erscheint der Hinweis „Jetzt richtig schreiben“.
-- Das Kind muss das Wort korrekt noch einmal selbst eingeben.
-- Erst wenn die richtige Schreibweise eingegeben wurde, geht es zur nächsten Vokabel.
-- Auch bei „Weiß ich nicht“ muss die richtige Lösung anschließend einmal selbst geschrieben werden.
-- Die bisherigen Funktionen aus V12.11 bleiben erhalten:
-  - Wort anhören
-  - drei schrittweise Hinweise
-  - klammerfreie, vereinfachte Lösungen
-  - "(to)" muss nicht eingegeben werden
+Neu bei falscher Eingabe:
+- Das Kind sieht weiterhin, was es falsch geschrieben hat.
+- Direkt darunter steht die richtige Schreibweise.
+- Beispiel:
+  ❌ Du hast geschrieben: fisch
+  ✅ Richtig ist: fish
+- Danach wird das Eingabefeld geleert.
+- Das Kind muss das Wort noch einmal vollständig richtig schreiben.
+- Erst dann geht es zur nächsten Vokabel.
 
-Version: V12.12 / ?v=1212
+Auch bei „Weiß ich nicht“:
+- richtige Lösung anzeigen
+- danach einmal selbst richtig schreiben
+
+Alle bisherigen Funktionen bleiben erhalten:
+- Wort anhören
+- drei schrittweise Hinweise
+- vereinfachte, klammerfreie Lösungen
+- "(to)" muss nicht eingegeben werden
+
+Version: V12.13 / ?v=1213
