@@ -795,3 +795,9 @@ button.feature.purple{background:linear-gradient(145deg,#fff,#f0e9ff)!important;
     gap:4px;
   }
 }
+
+/* V12.14: Mehrwort-Hinweise */
+#eng-hint-text{
+  white-space:pre-wrap;
+  word-spacing:.12em;
+}

@@ -153,18 +153,27 @@ function coreAnswer(raw){
   return s;
 }
 
-function hintPattern(word){
-  const chars=[...word];
-  return chars.map((c,i)=>{
-    if(c===" "||c==="-"||c==="'")return c;
-    if(i===0||i===chars.length-1||i%3===0)return c;
-    return "_";
-  }).join(" ");
+function hintPattern(phrase){
+  return String(phrase||"")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(word=>{
+      const chars=[...word];
+      return chars.map((c,i)=>{
+        if(c==="-"||c==="'")return c;
+        // show first letter; for longer words also show last letter
+        if(i===0)return c;
+        if(chars.length>=5 && i===chars.length-1)return c;
+        return "_";
+      }).join(" ");
+    })
+    .join("   ");
 }
 
 function getHints(w){
   const answer=coreAnswer(w.en);
-  const letters=[...answer].filter(c=>/[a-z]/i.test(c)).length;
+  const words=answer.split(/\s+/).filter(Boolean);
+  const totalLetters=words.reduce((sum,word)=>sum+[...word].filter(c=>/[a-z]/i.test(c)).length,0);
   const first=answer.charAt(0).toUpperCase();
   const last=answer.charAt(answer.length-1).toUpperCase();
 
@@ -180,9 +189,15 @@ function getHints(w){
 
   const h1=w.hint&&String(w.hint).trim()
     ? String(w.hint).trim()
-    : (special[answer.toLowerCase()]||`Das englische Wort beginnt mit „${first}“.`);
+    : (special[answer.toLowerCase()]||`Die Lösung beginnt mit „${first}“.`);
 
-  const h2=`Es hat ${letters} Buchstaben und endet mit „${last}“.`;
+  let h2;
+  if(words.length===1){
+    h2=`Das Wort hat ${totalLetters} Buchstaben und endet mit „${last}“.`;
+  }else{
+    const counts=words.map(word=>[...word].filter(c=>/[a-z]/i.test(c)).length);
+    h2=`Die Lösung besteht aus ${words.length} Wörtern. Die Wörter haben ${counts.join(" · ")} Buchstaben.`;
+  }
 
   const h3=`Fast geschafft: ${hintPattern(answer)}`;
 

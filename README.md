@@ -1,23 +1,19 @@
-# VocaFlow V12.13 – Fehlervergleich beim Englischlernen
+# VocaFlow V12.14 – Hinweise bei mehreren Wörtern
 
-Neu bei falscher Eingabe:
-- Das Kind sieht weiterhin, was es falsch geschrieben hat.
-- Direkt darunter steht die richtige Schreibweise.
-- Beispiel:
-  ❌ Du hast geschrieben: fisch
-  ✅ Richtig ist: fish
-- Danach wird das Eingabefeld geleert.
-- Das Kind muss das Wort noch einmal vollständig richtig schreiben.
-- Erst dann geht es zur nächsten Vokabel.
+Behoben:
+- Mehrwort-Lösungen werden bei den Hinweisen jetzt korrekt erkannt.
+- Beispiel „my own room“:
+  - Hinweis 2: „Die Lösung besteht aus 3 Wörtern. Die Wörter haben 2 · 3 · 4 Buchstaben.“
+  - Hinweis 3 zeigt die Wörter getrennt, z. B.:
+    m _   o _ _   r _ _ m
+- Ein-Wort-Lösungen behalten den bisherigen Hinweis mit Buchstabenanzahl und letztem Buchstaben.
+- Keine Mehrwort-Lösung wird mehr fälschlich als ein einziges Wort behandelt.
 
-Auch bei „Weiß ich nicht“:
-- richtige Lösung anzeigen
-- danach einmal selbst richtig schreiben
-
-Alle bisherigen Funktionen bleiben erhalten:
+Alle bisherigen Englisch-Funktionen bleiben erhalten:
 - Wort anhören
 - drei schrittweise Hinweise
-- vereinfachte, klammerfreie Lösungen
-- "(to)" muss nicht eingegeben werden
+- vereinfachte Lösungen ohne unnötige Klammern
+- falsche Eingabe + richtige Lösung im Vergleich
+- richtiges Nachschreiben vor dem Weitergehen
 
-Version: V12.13 / ?v=1213
+Version: V12.14 / ?v=1214
